@@ -27,7 +27,9 @@ produce **draft OQ evidence** for review by appropriately qualified and authoriz
   state is defined, documented, and achievable — "it boots" is not "it's usable".
 - **Unit testing** — the unit tests must be **evidenced**: which tests exist, that they
   were **executed**, and the **outcomes achieved** (pass counts, failures, coverage).
-  "Tests exist" is not enough — capture what was run and the result, as evidence.
+  "Tests exist" is not enough — capture what was run and the result, as evidence. If there
+  is **no test suite** (don't assume one — `tests/`/`validation/` may not exist), record
+  that as a finding/gap; never create or write into the project's test directories.
 - **Edge conditions** — behaviour at boundaries: empty/maximum/limit inputs, first/last,
   zero/overflow, concurrency, large payloads, unusual-but-valid data. Test these
   explicitly, not just the happy path.

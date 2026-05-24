@@ -18,6 +18,15 @@ against the system, it emits the **actual** values + PASS/FAIL, and the recorded
 is the **evidence**. The script encodes the *comparison*; the **expected** values are an
 input (from the spec/declaration), the **actual** values are measured at run time.
 
+**What the engine writes — and only that.** It creates/writes **only** the `Qualification/`
+directory. It does **not** write to, modify, or create the project's own directories —
+`tests/`, `validation/`, source, config, anything. It **reads** those if they exist (as
+evidence — existing tests, specs, use cases). If they **don't** exist, that is a discovered
+**finding**, never assumed and never auto-created — e.g. *no automated test suite present →
+OQ cannot evidence unit testing → that's a gap*; *no documented use cases → PQ authors them
+inside the pack*. Generated test scripts live in `Qualification/scripts/`; they are **not**
+injected into the system's own test tree (integrating them later is the user's choice).
+
 ## Specification-driven — no baked stack assumptions
 
 A test compares the system to its **specification**, not to values the test author

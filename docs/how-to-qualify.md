@@ -167,5 +167,9 @@ it passes — not on anyone's say-so.
 - **Honest evidence** — a skipped/unexecuted test is *not* a pass (skips are only for true
   environment gates); errors are never swallowed silently.
 - **Deterministic on compliance-critical paths** — no "usually right" / magic-number logic.
+- **Writes only the `Qualification/` folder** — never your `tests/`, `validation/`,
+  source, or config. It *reads* those if present (as evidence) and treats their **absence
+  as a finding, not an error** — it won't create them. Generated scripts live in
+  `Qualification/scripts/`, not in your test tree.
 - **Draft, traceable, approval-gated** — every claim cites its evidence; the pack is
   reviewed and approved by appropriately qualified and authorized personnel.
