@@ -1,6 +1,11 @@
 # Claude Code local, machine-specific settings (permissions etc.) — not shared
 .claude/settings.local.json
 
+# Secrets — never commit. Real keys go in .env (ignored); .env.example is the template.
+.env
+.env.*
+!.env.example
+
 # OS / editor cruft
 .DS_Store
 *.swp
