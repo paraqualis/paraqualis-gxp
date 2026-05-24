@@ -64,6 +64,11 @@ def render(md_path: Path, out_path: Path):
     doc = Document()
     doc.styles["Normal"].font.name = "Calibri"
     doc.styles["Normal"].font.size = Pt(10.5)
+    # Document metadata — authored by ParaQualis LLC
+    cp = doc.core_properties
+    cp.author = "ParaQualis LLC"
+    cp.last_modified_by = "ParaQualis LLC"
+    cp.title = md_path.stem.replace("-", " ")
 
     lines = md_path.read_text(encoding="utf-8").splitlines()
     i, n = 0, len(lines)

@@ -67,6 +67,13 @@ artifact in `scripts/`), acceptance criteria, and an execution record — plus a
 scheme, automated-vs-manual marking, a regulatory traceability matrix, and a three-layer
 evidence model for AI/ML systems.
 
+## Using the qualification engine
+
+**Full usage guide: [docs/how-to-qualify.md](docs/how-to-qualify.md)** (also available as a
+Word document, authored by ParaQualis LLC) — how to qualify any application, what to tell
+Claude, how to trigger `/qualify`, what to expect, every output in the `Qualification/`
+directory, and the gap-closure loop.
+
 ## Install (any machine)
 
 ```bash
