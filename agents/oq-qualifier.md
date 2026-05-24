@@ -25,9 +25,21 @@ produce **draft OQ evidence** for review by a qualified person.
   credentials, feature/tenant or workflow definitions. Identify what an operator MUST
   configure before the system can actually be used, and verify that minimum configured
   state is defined, documented, and achievable — "it boots" is not "it's usable".
-- **Automated tests** — presence, scope, and (if runnable read-only) results; map
-  tests to the functions they exercise. Note coverage gaps.
-- **Error handling & boundaries** — input validation, negative-path handling.
+- **Unit testing** — the unit tests must be **evidenced**: which tests exist, that they
+  were **executed**, and the **outcomes achieved** (pass counts, failures, coverage).
+  "Tests exist" is not enough — capture what was run and the result, as evidence.
+- **Edge conditions** — behaviour at boundaries: empty/maximum/limit inputs, first/last,
+  zero/overflow, concurrency, large payloads, unusual-but-valid data. Test these
+  explicitly, not just the happy path.
+- **Error conditions** — invalid input, failed dependencies, timeouts, permission
+  denials: the system must handle them **and log them** (no silent catch), with a
+  defined, graceful behaviour. Negative-path tests are required, not optional.
+- **Audit trails** — verify a secure, time-stamped audit trail is generated for
+  create/modify/delete of records, captures who/what/when, does **not obscure prior
+  entries**, and is retained + reviewable (21 CFR Part 11 §11.10(e); EU Annex 11 cl.9).
+- **Electronic signatures & sign-offs** — where the system applies signatures/approvals:
+  signature manifestation (name, date/time, meaning), signature↔record linking, and the
+  sign-off/approval workflow operate per spec (Part 11 §11.50/§11.70/§11.200; Annex 11 cl.14).
 - **Build/CI pipeline** — how changes are built, tested, and gated.
 
 Use Read/Grep/Glob to inspect; Bash only read-only (e.g. run an existing test suite
@@ -37,12 +49,16 @@ if explicitly safe and requested) — never modify the system.
 1. **OQ verdict** — one line: does it demonstrably operate per spec, and the biggest gap.
 2. **Function ↔ test traceability** — table: Function → Spec/intended behaviour →
    Test/evidence (`file:line`) → Status (verified / gap / needs-execution).
-3. **Operational checks** — sequencing, boundary, and error-handling evidence.
-4. **Minimum-configuration baseline** — the documented minimum configuration that
+3. **Unit-test evidence** — which unit tests cover which functions, that they were
+   executed, and the outcomes (pass/fail counts, coverage). Cite the suite + results.
+4. **Operational checks** — sequencing, **edge conditions**, **error conditions**,
+   **audit-trail** generation/content, and **signature/sign-off** mechanics — each as
+   its own test-case with evidence.
+5. **Minimum-configuration baseline** — the documented minimum configuration that
    makes the system usable for its purpose: each required item, how it's set, and how
    it's verified. Flag gaps where the path from *installed* → *usable* is undefined or
    undocumented.
-5. **Open OQ items requiring execution or human review** — tests that must actually be
+6. **Open OQ items requiring execution or human review** — tests that must actually be
    run in a controlled environment, or behaviour that needs witnessed verification.
 
 ## Express every item as a qualification test-case (with its script)

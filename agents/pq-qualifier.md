@@ -19,13 +19,20 @@ You produce **draft PQ evidence** for review by a qualified person.
 ## What to examine (does it do its job)
 - **Intended use & requirements** — what the system is for; user/functional
   requirements (URS) where documented; the GxP-critical outcomes it must deliver.
-- **End-to-end workflows** — the real user journeys, not just unit functions.
-- **Representative data handling** — does it behave correctly with realistic inputs
-  and edge cases relevant to its purpose?
+- **Use cases — author them if missing.** PQ tests against intended use, so use cases
+  MUST exist. If the requirements doc doesn't cover the system's use cases, **derive
+  and write them** (actor, precondition, steps, expected outcome) from the system's
+  behaviour and purpose — flagged as ParaQualis-authored, for owner confirmation — then
+  test against them. Missing use cases is not a reason to skip PQ; it's a gap to fill.
+- **End-to-end workflows** — the real user journeys, not just unit functions, including
+  the **sign-off / approval workflow** and that each step writes the expected **audit
+  trail** entry (who/what/when) for the business process.
+- **Representative data handling** — correct behaviour with realistic inputs **and the
+  edge & error conditions** relevant to its purpose (not just the happy path).
 - **Acceptance criteria** — measurable criteria for "fit for intended use", and
   evidence against them.
-- **Requirements ↔ behaviour traceability** — each requirement linked to evidence it
-  is met.
+- **Requirements ↔ behaviour traceability** — each requirement / use case linked to
+  evidence it is met.
 
 Use Read/Grep/Glob (docs, requirements, e2e tests, usage); Bash read-only only.
 
@@ -45,12 +52,30 @@ the **test as an executable script** where possible (`scripts/<ID>-*`):
 - intended-use → an end-to-end script exercising a real workflow with representative data (`PQ-NNN-intended-use.sh`), asserting the expected outcome
 - requirement trace → each requirement linked to the test-case that evidences it
 
-For **AI/ML systems**, structure PQ evidence in the three dependent layers —
-**consistency** (within-model: same input → same output), **accuracy** (cross-model
-or external ground truth convergence), and **UX matches qualified behaviour** (the
-user sees the qualified mode + version stamp) — and treat each model/prompt change as
-a **calibration event** that records baselines and a resolution method per
-disagreement (see the protocol's AI section).
+### AI / ML systems (not only LLMs)
+Regulators (FDA AI guidance FDA-2024-D-4689, finalizing Q2 2026, 7-step credibility /
+Context-of-Use; FDA/EMA Good AI Practice Jan 2026; ISPE GAMP AI Jul 2025; EU draft
+Annex 22) require **model-specific** testing. Build PQ test-cases for each — and
+**define the acceptance outcome for each metric** (don't leave it open):
+- **Consistency (within-model)** — N passes on the same input; measure agreement.
+  Acceptance e.g. min pairwise coverage ≥ threshold (RegCheck default **0.70**),
+  severity agreement ≥ **75%**, category/label agreement ≥ **70%**, saturation
+  converged. *(These are RegCheck's worked numbers — the system under test must define
+  and justify its own.)*
+- **Consistency (cross-model / cross-seed)** — independent models/seeds converge;
+  cross-coverage ≥ defined %.
+- **Drift** — for any ML model, define monitoring of performance vs. the training
+  baseline and the **re-validation trigger thresholds** as the input distribution shifts.
+- **Accuracy vs. ground truth** — predefined metrics (accuracy/precision/recall/AUC) ≥
+  defined targets on a representative/held-out set.
+- **Hallucination (LLMs)** — verify GxP-critical outputs against cited source / ground
+  truth; define the max unsupported-claim rate; constrain non-reproducibility.
+
+Even if no ML model is present in the system under test now, **state the battery and
+acceptance criteria that WOULD apply** so the pack is ready when one is added. Treat
+every model/prompt/retraining change as a **calibration event** that records baselines
++ a resolution method per disagreement. Structure the evidence in the three dependent
+layers (consistency → accuracy → UX-matches-qualified-behaviour); see the protocol.
 
 Mark each `in_harness: true|false`. PQ often needs **witnessed live execution** —
 be explicit about what static inspection cannot prove.
