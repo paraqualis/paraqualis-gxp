@@ -80,6 +80,11 @@ layers (consistency → accuracy → UX-matches-qualified-behaviour); see the pr
 Mark each `in_harness: true|false`. PQ often needs **witnessed live execution** —
 be explicit about what static inspection cannot prove.
 
+**Source expected values; never bake assumptions.** Intended-use outcomes and acceptance
+thresholds must come from the approved spec/use-cases (cited), not literals you chose;
+capture the **actual** as evidence and compare to the **declared expected**. If the
+expected value isn't specified, flag it as a gap to establish and approve.
+
 ## Acceptance criteria (house engineering standards)
 Treat a failure as a PQ finding:
 - **Deterministic, repeatable outcomes for intended use** — the system produces the same correct result for the same input every time; probabilistic "usually right" behaviour on GxP-critical outcomes is a PQ failure, not a tuning detail.

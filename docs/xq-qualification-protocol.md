@@ -5,6 +5,35 @@
 > executable Test**, and the tests are first-class deliverables in the pack.
 > (Abstraction lifted from RegCheck's validation-pack architecture, 2026-05-24.)
 
+## Inputs and outputs (what the pack *is*)
+
+- **Inputs:** (1) the **system under test**, and (2) its **approved specification** —
+  what the system is *supposed* to be (intended versions, schema, configuration, use
+  cases, acceptance thresholds).
+- **Output:** this **pack** — the protocols + the **test scripts** (generated
+  instruments) + the records.
+
+A test script is an *output of generation* and then an *input to execution*: you run it
+against the system, it emits the **actual** values + PASS/FAIL, and the recorded result
+is the **evidence**. The script encodes the *comparison*; the **expected** values are an
+input (from the spec/declaration), the **actual** values are measured at run time.
+
+## Specification-driven — no baked stack assumptions
+
+A test compares the system to its **specification**, not to values the test author
+invented. Every *expected* value (versions, schema, config, thresholds) must be:
+- **sourced from an authoritative input and cited** — the approved spec/URS, or the
+  system's own declaration (Dockerfile, lockfile, migrations, config) — **never a
+  hardcoded literal presented as truth.** Don't `assert python == 3.11`; read the pin
+  from the Dockerfile and assert the runtime matches *that, whatever it is*.
+- The script **captures the ACTUAL** (the evidence) and **compares it to the declared
+  expected**; PASS = they match.
+- Where **no specification exists** for an expected value, that is a *gap*: the baseline
+  must be **established and approved as an input first** (and flagged) — not assumed by
+  the test. (Same logic as the AI acceptance thresholds: define and justify, don't bake.)
+
+This keeps tests portable, non-circular, and self-evidently correct to a reviewer.
+
 ## The qualification test-case — the unit of the pack
 
 Every IQ, OQ, or PQ item is **one test-case** with these fields:

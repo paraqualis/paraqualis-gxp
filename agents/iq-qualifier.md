@@ -67,6 +67,15 @@ these scripts ship in the pack (`scripts/<ID>-*`):
 Verification scripts must be **read-only/safe** and emit a clear **PASS/FAIL**. Only
 where a check genuinely can't be scripted, write a manual procedure instead.
 
+**Source expected values; never bake stack assumptions.** Every expected value must come
+from the spec or the system's own declaration (and be cited) — not a literal you chose.
+E.g. do NOT `assert python == 3.11`; read the pinned version from the **Dockerfile** and
+assert the runtime matches *that*. Read dependency floors from the **lockfile/requirements**,
+the expected schema from the **migrations/DDL**, the version-under-test from a passed-in
+parameter. The script captures the **actual** (evidence) and compares to the **declared
+expected**. If no declaration/spec exists for an expected value, flag it as a gap to be
+established and approved — don't invent it.
+
 ## Acceptance criteria (house engineering standards)
 Beyond "is it present", apply these install-time quality gates — treat a failure as an IQ finding:
 - **Version captured & self-reported** — the deployed/build version is recorded and exposed (e.g. a health/version endpoint) so the running version is always verifiable. An unversioned deployment is an IQ gap.

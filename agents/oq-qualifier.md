@@ -73,6 +73,11 @@ the **test as an executable script** where possible — pack deliverables (`scri
 Prefer **in_harness** (automated, re-runnable) tests and mark each `in_harness: true|false`.
 Read-only/safe; clear PASS/FAIL. Where a check can't be scripted, write a manual procedure.
 
+**Source expected values; never bake assumptions.** Expected behaviour/config must come
+from the spec or the system's own declaration (cited) — not literals you chose. Capture
+the **actual** (evidence) and compare to the **declared expected**; if no spec exists for
+an expected value, flag it as a gap to establish and approve, don't invent it.
+
 ## Acceptance criteria (house engineering standards)
 These operational quality gates make the OQ meaningful, not cosmetic — treat a failure as an OQ finding:
 - **No silent error handling** — every catch/except logs the error WITH its stack and surfaces it (ideally server-side). A bare `catch {}` / `except: pass` is a defect; "graceful degradation" must still log. A swallowed error is the classic multi-day-debug trap.
