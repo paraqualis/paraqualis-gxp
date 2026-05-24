@@ -126,13 +126,32 @@ Discipline: single-variable changes, re-run after every change, snapshot baselin
 
 ## Pack layout
 
+Write the pack to a **standalone `Qualification/` directory** (a deliverable — do NOT
+write into the system under test, which was examined read-only):
+
 ```
-qualification/
-  Qualification-Summary.md     # cover · verdict · traceability matrix · open items · approvals
-  IQ.md  OQ.md  PQ.md          # the protocols — test-case tables per stage
+Qualification/
+  docs/                        # Markdown source-of-truth + generated renderings
+    Qualification-Summary.md   #   cover · verdict · traceability matrix · open items · approvals
+    IQ.md  OQ.md  PQ.md        #   test-case tables per stage
+    *.docx                     #   branded ParaQualis Word (generated)
+    *-Qualification-Pack.xlsx  #   workbook: a sheet per xQ stage + Summary + Traceability
   scripts/                     # executable tests (the evidence-gathering instruments)
-  records/                     # execution records once run (the evidence)
+  records/                     # execution-record templates → filled records = evidence
+  build_docx.py  build_xlsx.py # regenerate Word/Excel from the Markdown
 ```
+
+**Output formats — Markdown is the source of truth; Word and Excel are *generated*
+renderings, never hand-maintained:**
+- **Markdown** (`docs/*.md`) — versionable, diffable, the canonical content.
+- **Word** (`docs/*.docx`) — branded ParaQualis (deep-blue headings/table headers, see
+  `~/.claude/brand_colors.md`), via `python-docx`; for the client to read/sign.
+- **Excel** (`docs/*-Qualification-Pack.xlsx`) — one sheet per xQ stage plus Summary and
+  Traceability, via `openpyxl`; QA teams work the trace matrix here.
+
+`build_docx.py` and `build_xlsx.py` ship inside the pack so it is self-rebuilding:
+`python3 build_docx.py && python3 build_xlsx.py` after any Markdown edit. (`pandoc` is
+NOT required; both builders use pure-Python libraries.)
 
 ## Governance
 

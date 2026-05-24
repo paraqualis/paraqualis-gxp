@@ -41,13 +41,15 @@ a blank execution-record block. A requirement without a test is incomplete.
 
 ## Step 4 — Assemble the package
 Collect the three sections and produce a single, client-ready **Qualification Package**
-following the protocol's pack layout:
+in a **standalone `Qualification/` directory** (a deliverable — never write into the
+system under test, which was examined read-only), per the protocol's pack layout:
 
 ```
-qualification/
-  Qualification-Summary.md     IQ.md  OQ.md  PQ.md
-  scripts/                     # the executable test scripts the subagents authored
-  records/                     # execution records (filled when scripts are run)
+Qualification/
+  docs/      Qualification-Summary.md  IQ.md  OQ.md  PQ.md  (+ generated .docx, .xlsx)
+  scripts/   # the executable test scripts the subagents authored, one file per test-case
+  records/   # execution-record templates (filled when scripts are run)
+  build_docx.py  build_xlsx.py   # regenerate Word (branded) + Excel (sheet per xQ) from the md
 ```
 
 1. **Header & summary** — system identified, date, mode, overall readiness verdict,
@@ -61,8 +63,11 @@ qualification/
    verification, grouped by stage and owner.
 6. **Approval & governance block** — see below.
 
-Offer to write the whole pack to disk under `qualification/` (protocols, `scripts/`,
-`records/`) so it can be handed to a pharma client as structured evidence.
+Offer to write the whole pack to disk under a standalone `Qualification/` directory,
+then render the branded **Word** (`build_docx.py`, python-docx, ParaQualis palette) and
+**Excel** (`build_xlsx.py`, openpyxl — a sheet per xQ stage + Summary + Traceability) so
+it can be handed to a pharma client in md, .docx, and .xlsx. Markdown is the source of
+truth; Word/Excel are generated, never hand-edited.
 
 ## Governance — non-negotiable
 - Stamp the package **"DRAFT — pending qualified-person review and approval."**
