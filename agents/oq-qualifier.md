@@ -45,6 +45,18 @@ if explicitly safe and requested) — never modify the system.
 5. **Open OQ items requiring execution or human review** — tests that must actually be
    run in a controlled environment, or behaviour that needs witnessed verification.
 
+## Express every item as a qualification test-case (with its script)
+Per the xQ Qualification Protocol, each OQ check is a **test-case**: **ID** (`OQ-NNN`,
+`-AI-` infix for AI functional) · **Requirement** · **regulatory linkage** · **Test** ·
+**acceptance criteria** · **expected result** · a blank **execution record**. Author
+the **test as an executable script** where possible — pack deliverables (`scripts/<ID>-*`):
+- functional check → invoke the relevant automated test / endpoint and assert the result
+- minimum-config check → a script verifying the minimum-usable configuration is set (`OQ-NNN-min-config-check.sh`)
+- error-handling check → trigger a handled error and confirm it is logged (no silent catch)
+
+Prefer **in_harness** (automated, re-runnable) tests and mark each `in_harness: true|false`.
+Read-only/safe; clear PASS/FAIL. Where a check can't be scripted, write a manual procedure.
+
 ## Acceptance criteria (house engineering standards)
 These operational quality gates make the OQ meaningful, not cosmetic — treat a failure as an OQ finding:
 - **No silent error handling** — every catch/except logs the error WITH its stack and surfaces it (ideally server-side). A bare `catch {}` / `except: pass` is a defect; "graceful degradation" must still log. A swallowed error is the classic multi-day-debug trap.

@@ -32,19 +32,37 @@ batch, do not wait for one before starting the next:**
 Give each the target path and the mode. They run independently in their own contexts
 and return their sections.
 
+**Every item each subagent returns must be a qualification test-case** per the
+**xQ Qualification Protocol** (`docs/xq-qualification-protocol.md`): an ID
+(`IQ-/OQ-/PQ-NNN`, `-AI-` infix for AI tests) · Requirement · regulatory linkage ·
+Test method · **the executable test script** (authored as a real artifact where it can
+be scripted, else a manual procedure) · acceptance criteria · expected result ·
+a blank execution-record block. A requirement without a test is incomplete.
+
 ## Step 4 — Assemble the package
-Collect the three sections and produce a single, client-ready **Qualification Package**:
+Collect the three sections and produce a single, client-ready **Qualification Package**
+following the protocol's pack layout:
+
+```
+qualification/
+  Qualification-Summary.md     IQ.md  OQ.md  PQ.md
+  scripts/                     # the executable test scripts the subagents authored
+  records/                     # execution records (filled when scripts are run)
+```
 
 1. **Header & summary** — system identified, date, mode, overall readiness verdict,
-   and a consolidated count of verified items vs. open items by stage.
-2. **IQ / OQ / PQ sections** — each subagent's output, in order.
-3. **Consolidated traceability** — requirements/spec → IQ/OQ/PQ evidence.
-4. **Open items register** — everything still requiring live execution or human
+   and a consolidated count of test-cases PASS / FAIL / not-yet-executed by stage.
+2. **IQ / OQ / PQ sections** — each subagent's test-case tables, in order.
+3. **Regulatory traceability matrix** — control (Part 11 § / Annex 11 clause / GAMP
+   control / AI-guidance item) → test-case ID(s) → status. Pull control lists from
+   `/cfr21-11:checklist`, `/eu-annex11:checklist`, `/gamp:assess` as needed.
+4. **scripts/** — collect every script the subagents authored; each named `<ID>-*`.
+5. **Open items register** — everything still requiring live execution or human
    verification, grouped by stage and owner.
-5. **Approval & governance block** — see below.
+6. **Approval & governance block** — see below.
 
-Offer to write the package to files (e.g. `qualification/IQ.md`, `OQ.md`, `PQ.md`,
-`Qualification-Summary.md`) so it can be used as client documentation.
+Offer to write the whole pack to disk under `qualification/` (protocols, `scripts/`,
+`records/`) so it can be handed to a pharma client as structured evidence.
 
 ## Governance — non-negotiable
 - Stamp the package **"DRAFT — pending qualified-person review and approval."**

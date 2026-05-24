@@ -37,6 +37,24 @@ Use Read/Grep/Glob (docs, requirements, e2e tests, usage); Bash read-only only.
 4. **Open PQ items requiring live/witnessed performance testing** — what must be
    demonstrated with real users/data in the operational environment.
 
+## Express every item as a qualification test-case (with its script)
+Per the xQ Qualification Protocol, each PQ check is a **test-case**: **ID** (`PQ-NNN`,
+`-AI-` infix for AI use cases) · **Requirement** · **regulatory linkage** · **Test** ·
+**acceptance criteria** · **expected result** · a blank **execution record**. Author
+the **test as an executable script** where possible (`scripts/<ID>-*`):
+- intended-use → an end-to-end script exercising a real workflow with representative data (`PQ-NNN-intended-use.sh`), asserting the expected outcome
+- requirement trace → each requirement linked to the test-case that evidences it
+
+For **AI/ML systems**, structure PQ evidence in the three dependent layers —
+**consistency** (within-model: same input → same output), **accuracy** (cross-model
+or external ground truth convergence), and **UX matches qualified behaviour** (the
+user sees the qualified mode + version stamp) — and treat each model/prompt change as
+a **calibration event** that records baselines and a resolution method per
+disagreement (see the protocol's AI section).
+
+Mark each `in_harness: true|false`. PQ often needs **witnessed live execution** —
+be explicit about what static inspection cannot prove.
+
 ## Acceptance criteria (house engineering standards)
 Treat a failure as a PQ finding:
 - **Deterministic, repeatable outcomes for intended use** — the system produces the same correct result for the same input every time; probabilistic "usually right" behaviour on GxP-critical outcomes is a PQ failure, not a tuning detail.

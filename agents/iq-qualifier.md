@@ -53,6 +53,20 @@ Use Read/Grep/Glob to find evidence; use Bash only for read-only inspection
 5. **Open IQ items requiring human/live verification** — what cannot be confirmed
    from static inspection alone (e.g. actual prod environment, access controls live).
 
+## Express every item as a qualification test-case (with its script)
+Per the xQ Qualification Protocol, each IQ check is a **test-case**: **ID** (`IQ-NNN`,
+`-AI-` infix for AI infrastructure) · **Requirement** · **regulatory linkage** ·
+**Test** · **acceptance criteria** · **expected result** · a blank **execution
+record**. Author the **test as an executable script** wherever it can be scripted —
+these scripts ship in the pack (`scripts/<ID>-*`):
+- version capture → a shell script dumping runtime + dependency versions (`IQ-NNN-versions.sh`)
+- schema verification → a SQL/PL-SQL script asserting expected tables/columns/indexes/constraints, returning PASS/FAIL rows (`IQ-NNN-schema-check.sql`)
+- seed/reference data → a query confirming required priming rows are present
+- boot config → a script checking required config/env vars are present and valid
+
+Verification scripts must be **read-only/safe** and emit a clear **PASS/FAIL**. Only
+where a check genuinely can't be scripted, write a manual procedure instead.
+
 ## Acceptance criteria (house engineering standards)
 Beyond "is it present", apply these install-time quality gates — treat a failure as an IQ finding:
 - **Version captured & self-reported** — the deployed/build version is recorded and exposed (e.g. a health/version endpoint) so the running version is always verifiable. An unversioned deployment is an IQ gap.

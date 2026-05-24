@@ -61,6 +61,12 @@ pack** (verify mode); `/qualify` assembles the consolidated package. All output 
 stamped draft pending qualified-person review — the generator itself is a GxP-impacting
 tool that would require its own qualification before its output is relied upon.
 
+Every item follows the **[xQ Qualification Protocol](docs/xq-qualification-protocol.md)**:
+a Requirement paired with an **executable test** (a script/query that is itself a pack
+artifact in `scripts/`), acceptance criteria, and an execution record — plus an ID
+scheme, automated-vs-manual marking, a regulatory traceability matrix, and a three-layer
+evidence model for AI/ML systems.
+
 ## Install (any machine)
 
 ```bash
@@ -114,6 +120,8 @@ it re-scans the commands and skills folders.
 │       └── reference/
 │           ├── gamp5-category-framework.md   # original summary (not ISPE text)
 │           └── ai-ml-validation.md           # AI/ML validation themes
+├── docs/
+│   └── xq-qualification-protocol.md   # the test-case + pack abstraction for /qualify
 ├── install.sh        # symlinks commands + skills + agents into ~/.claude/
 ├── LICENSE           # MIT
 └── README.md
