@@ -220,8 +220,8 @@ Each gap is a row:
 
 | Field | Meaning |
 |---|---|
-| **Gap ID** | `G-001`, never reused |
-| **Stage + source test-case** | which IQ/OQ/PQ test-case(s) surfaced it |
+| **Gap ID** | `GIQ-NNN` / `GOQ-NNN` / `GPQ-NNN` — the prefix marks the stage that surfaced the gap, so the three agents number independently and **never collide**. 3-digit, never reused. |
+| **Source test-case(s)** | the IQ/OQ/PQ test-case(s) that surfaced it — may be several after dedup |
 | **Description** | what is missing/wrong |
 | **Severity** | critical / high / medium / low |
 | **Regulatory linkage** | the control it threatens (Part 11 § / Annex 11 cl. / GAMP / AI) |
@@ -229,6 +229,15 @@ Each gap is a row:
 | **Target location** | file/area to change, where known |
 | **Definition of done** | the **test-case(s) that must PASS** to close the gap |
 | **Owner / Status** | open → in-progress → closed |
+
+**Consolidate & dedupe — name by greatest impact.** The same underlying gap is often
+surfaced by more than one stage (e.g. a logging weakness shows up in both OQ and PQ).
+Merge those into a **single** entry — never list it two or three times. Assign the ID of
+the stage where the gap carries the **greatest impact** (highest severity); list *all*
+contributing test-cases in the Source field and note the other stages. So a gap that is
+*medium* in OQ but *critical* in PQ becomes one **`GPQ-NNN`** (severity = critical),
+"also surfaced by OQ-AI-083". This keeps the register honest about how bad each gap really
+is and stops the same fix being raised three times.
 
 **The loop:** a gap is closed only when its linked test-case passes — so remediation and
 evidence are the same chain. Feeding `Gap-Analysis.md` to Claude in the target repo: it

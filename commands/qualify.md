@@ -62,12 +62,15 @@ Qualification/
    control / AI-guidance item) → test-case ID(s) → status. Pull control lists from
    `/cfr21-11:checklist`, `/eu-annex11:checklist`, `/gamp:assess` as needed.
 4. **scripts/** — collect every script the subagents authored; each named `<ID>-*`.
-5. **Gap-Analysis.md** — the gap register (`G-NNN` per gap): stage + source test-case ·
-   description · severity · regulatory linkage · recommended remediation · target
-   location · **definition of done (the test-case that must pass)** · owner · status.
-   One file that is both the QA deliverable and the file fed to Claude in the target repo
-   to close gaps. See the protocol's Gap Analysis section. (Supersedes a bare open-items
-   list — the open items become rows here.)
+5. **Gap-Analysis.md** — the gap register. IDs are **stage-prefixed so they never
+   collide** across the parallel agents: `GIQ-NNN` / `GOQ-NNN` / `GPQ-NNN`. Each row:
+   source test-case(s) · description · severity · regulatory linkage · recommended
+   remediation · target location · **definition of done (the test-case that must pass)** ·
+   owner · status. **Consolidate & dedupe:** merge a gap surfaced by more than one stage
+   into a single entry, named for the stage of **greatest impact** (highest severity),
+   listing all contributing test-cases. One file that is both the QA deliverable and the
+   file fed to Claude in the target repo to close gaps. See the protocol's Gap Analysis
+   section. (Open items become rows here.)
 6. **Approval & governance block** — see below.
 
 Offer to write the whole pack to disk under `<project>/Qualification/` (or a specified location),
