@@ -178,6 +178,7 @@ Qualification/
   docs/                        # Markdown source-of-truth + generated renderings
     Qualification-Summary.md   #   cover · verdict · traceability matrix · open items · approvals
     IQ.md  OQ.md  PQ.md        #   test-case tables per stage
+    Gap-Analysis.md            #   the gap register — QA deliverable AND agent-feedable
     *.docx                     #   branded ParaQualis Word (generated)
     *-Qualification-Pack.xlsx  #   workbook: a sheet per xQ stage + Summary + Traceability
   scripts/                     # executable tests (the evidence-gathering instruments)
@@ -196,6 +197,33 @@ renderings, never hand-maintained:**
 `build_docx.py` and `build_xlsx.py` ship inside the pack so it is self-rebuilding:
 `python3 build_docx.py && python3 build_xlsx.py` after any Markdown edit. (`pandoc` is
 NOT required; both builders use pure-Python libraries.)
+
+## Gap Analysis & remediation (`docs/Gap-Analysis.md`)
+
+One file, two audiences: it is the auditable **QA gap register** AND the file you feed to
+a coding agent (Claude) in the target repo to **close** the gaps. Do **not** put this in
+long-term memory — it is transient and belongs to the target system, not the tool.
+
+Each gap is a row:
+
+| Field | Meaning |
+|---|---|
+| **Gap ID** | `G-001`, never reused |
+| **Stage + source test-case** | which IQ/OQ/PQ test-case(s) surfaced it |
+| **Description** | what is missing/wrong |
+| **Severity** | critical / high / medium / low |
+| **Regulatory linkage** | the control it threatens (Part 11 § / Annex 11 cl. / GAMP / AI) |
+| **Recommended remediation** | what to change |
+| **Target location** | file/area to change, where known |
+| **Definition of done** | the **test-case(s) that must PASS** to close the gap |
+| **Owner / Status** | open → in-progress → closed |
+
+**The loop:** a gap is closed only when its linked test-case passes — so remediation and
+evidence are the same chain. Feeding `Gap-Analysis.md` to Claude in the target repo: it
+works each gap, and the *definition of done* is the test it must make green.
+
+(Split into a separate agent-only remediation brief only if gap volume/complexity later
+makes the combined file unwieldy — not by default.)
 
 ## Governance
 

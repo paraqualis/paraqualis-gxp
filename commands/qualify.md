@@ -46,7 +46,7 @@ system under test, which was examined read-only), per the protocol's pack layout
 
 ```
 Qualification/
-  docs/      Qualification-Summary.md  IQ.md  OQ.md  PQ.md  (+ generated .docx, .xlsx)
+  docs/      Qualification-Summary.md  IQ.md  OQ.md  PQ.md  Gap-Analysis.md  (+ generated .docx, .xlsx)
   scripts/   # the executable test scripts the subagents authored, one file per test-case
   records/   # execution-record templates (filled when scripts are run)
   build_docx.py  build_xlsx.py   # regenerate Word (branded) + Excel (sheet per xQ) from the md
@@ -59,8 +59,12 @@ Qualification/
    control / AI-guidance item) → test-case ID(s) → status. Pull control lists from
    `/cfr21-11:checklist`, `/eu-annex11:checklist`, `/gamp:assess` as needed.
 4. **scripts/** — collect every script the subagents authored; each named `<ID>-*`.
-5. **Open items register** — everything still requiring live execution or human
-   verification, grouped by stage and owner.
+5. **Gap-Analysis.md** — the gap register (`G-NNN` per gap): stage + source test-case ·
+   description · severity · regulatory linkage · recommended remediation · target
+   location · **definition of done (the test-case that must pass)** · owner · status.
+   One file that is both the QA deliverable and the file fed to Claude in the target repo
+   to close gaps. See the protocol's Gap Analysis section. (Supersedes a bare open-items
+   list — the open items become rows here.)
 6. **Approval & governance block** — see below.
 
 Offer to write the whole pack to disk under a standalone `Qualification/` directory,

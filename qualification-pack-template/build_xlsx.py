@@ -77,5 +77,9 @@ if __name__ == "__main__":
     # Traceability matrix
     write_sheet(wb, "Traceability",
                 table_after(DOCS / "Qualification-Summary.md", "traceability matrix"))
+    # Gap register (if present) — QA register + agent-feedable remediation list
+    gap_md = DOCS / "Gap-Analysis.md"
+    if gap_md.exists():
+        write_sheet(wb, "Gaps", table_after(gap_md, "gap"))
     wb.save(str(OUT))
     print(f"wrote {OUT.name}  (sheets: {', '.join(s.title for s in wb.worksheets)})")
