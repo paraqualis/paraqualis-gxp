@@ -5,6 +5,16 @@
 > executable Test**, and the tests are first-class deliverables in the pack.
 > (Abstraction lifted from RegCheck's validation-pack architecture, 2026-05-24.)
 
+## Plain English, always
+
+Every human-readable part of the pack — verdicts, test-case descriptions, gap entries,
+the summary — is written in **plain English that any reader follows without decoding
+jargon**, not just a software engineer. State what something is **and why it matters**.
+When a precise technical term, file name, or command is needed, it goes in the *script*,
+*remediation*, or *target* fields — **not** the narrative. If a smart non-specialist
+couldn't follow a sentence, rewrite it. This is a compliance deliverable read by quality,
+QA, and auditors: **clarity is a requirement, not a nicety.**
+
 ## Inputs and outputs (what the pack *is*)
 
 - **Inputs:** (1) the **system under test**, and (2) its **approved specification** —

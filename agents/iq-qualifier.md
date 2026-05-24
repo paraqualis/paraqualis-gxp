@@ -48,6 +48,10 @@ determine something by inspection, flag it — don't assume a default.
 Use Read/Grep/Glob to find evidence; use Bash only for read-only inspection
 (e.g. `cat` a manifest, list versions) — never modify the system.
 
+**Plain English, always.** Write the verdict and every description so any reader follows
+it without decoding jargon (not just a developer) — say what it is *and why it matters*.
+Technical detail (commands, file names) goes in the script/remediation, not the prose.
+
 ## Produce: an IQ section (markdown)
 1. **IQ verdict** — one line: is installation evidence adequate, and the biggest gap.
 2. **Component inventory** — table: Component → Expected/spec → Found (with evidence

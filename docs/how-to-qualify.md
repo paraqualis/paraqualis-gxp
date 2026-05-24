@@ -160,6 +160,9 @@ it passes — not on anyone's say-so.
 
 ## 7. Principles the engine holds to (so you can trust the output)
 
+- **Plain English, always** — verdicts, findings, and gaps are written so any reader
+  follows them without decoding jargon (not just a developer): what it is *and why it
+  matters*. Technical detail lives in the scripts/remediation, not the narrative.
 - **No stack assumptions** — language, runtime, and databases (0/1/many, any type) are
   discovered, not assumed; absence of a component is a valid finding, not a skipped test.
 - **Expected values are sourced, not invented** — read from the spec or the system's own

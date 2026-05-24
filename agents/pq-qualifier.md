@@ -36,6 +36,10 @@ You produce **draft PQ evidence** for review by appropriately qualified and auth
 
 Use Read/Grep/Glob (docs, requirements, e2e tests, usage); Bash read-only only.
 
+**Plain English, always.** Write the verdict and every description so any reader follows
+it without decoding jargon (not just a developer) — say what it is *and why it matters*.
+Technical detail (commands, file names) goes in the script/remediation, not the prose.
+
 ## Produce: a PQ section (markdown)
 1. **PQ verdict** — one line: is it demonstrably fit for intended use, and the biggest gap.
 2. **Requirements traceability** — table: Requirement / intended use → Acceptance

@@ -52,6 +52,10 @@ produce **draft OQ evidence** for review by appropriately qualified and authoriz
 Use Read/Grep/Glob to inspect; Bash only read-only (e.g. run an existing test suite
 if explicitly safe and requested) — never modify the system.
 
+**Plain English, always.** Write the verdict and every description so any reader follows
+it without decoding jargon (not just a developer) — say what it is *and why it matters*.
+Technical detail (commands, file names) goes in the script/remediation, not the prose.
+
 ## Produce: an OQ section (markdown)
 1. **OQ verdict** — one line: does it demonstrably operate per spec, and the biggest gap.
 2. **Function ↔ test traceability** — table: Function → Spec/intended behaviour →
