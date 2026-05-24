@@ -220,9 +220,9 @@ Each gap is a row:
 
 | Field | Meaning |
 |---|---|
-| **Gap ID** | `GIQ-NNN` / `GOQ-NNN` / `GPQ-NNN` — the prefix marks the stage that surfaced the gap, so the three agents number independently and **never collide**. 3-digit, never reused. |
+| **Gap ID** | `GIQ-NNN` / `GOQ-NNN` / `GPQ-NNN` — the prefix marks the stage that surfaced the gap, so the three agents number independently and **never collide**. 3-digit, never reused. **Exactly one ID column** — no separate global `G-NNN`, no double-numbering. |
 | **Source test-case(s)** | the IQ/OQ/PQ test-case(s) that surfaced it — may be several after dedup |
-| **Description** | what is missing/wrong |
+| **Description** | what is wrong **and why it matters**, in **plain language a quality reviewer who is not a software engineer can understand**. Explain tooling jargon rather than assuming it — e.g. "dependencies aren't locked to exact versions, so a later rebuild can pull different libraries than the validated build" — NOT "no lockfile, floor pins". Keep the precise technical fix in *Recommended remediation*. |
 | **Severity** | critical / high / medium / low |
 | **Regulatory linkage** | the control it threatens (Part 11 § / Annex 11 cl. / GAMP / AI) |
 | **Recommended remediation** | what to change |

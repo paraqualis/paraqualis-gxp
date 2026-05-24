@@ -66,9 +66,12 @@ Qualification/
    collide** across the parallel agents: `GIQ-NNN` / `GOQ-NNN` / `GPQ-NNN`. Each row:
    source test-case(s) · description · severity · regulatory linkage · recommended
    remediation · target location · **definition of done (the test-case that must pass)** ·
-   owner · status. **Consolidate & dedupe:** merge a gap surfaced by more than one stage
-   into a single entry, named for the stage of **greatest impact** (highest severity),
-   listing all contributing test-cases. One file that is both the QA deliverable and the
+   owner · status. **One ID column only** (no separate global `G-NNN`). Write each
+   description in **plain language a quality reviewer can understand — what it is AND why
+   it matters** — explain jargon, don't assume it; keep the technical fix in the
+   remediation field. **Consolidate & dedupe:** merge a gap surfaced by more than one
+   stage into a single entry, named for the stage of **greatest impact** (highest
+   severity), listing all contributing test-cases. One file that is both the QA deliverable and the
    file fed to Claude in the target repo to close gaps. See the protocol's Gap Analysis
    section. (Open items become rows here.)
 6. **Approval & governance block** — see below.
