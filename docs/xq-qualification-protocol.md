@@ -170,8 +170,11 @@ Discipline: single-variable changes, re-run after every change, snapshot baselin
 
 ## Pack layout
 
-Write the pack to a **standalone `Qualification/` directory** (a deliverable — do NOT
-write into the system under test, which was examined read-only):
+Write the pack to a **`Qualification/` directory inside the project being qualified**
+(`<project>/Qualification/`) by default — it lives and versions with the system and sits
+where the gap-loop needs it. The agents **examine** the system read-only and modify **no
+existing files**; the pack is a *new* folder added alongside. (A separate output location
+can be specified instead, if a detached deliverable is preferred.)
 
 ```
 Qualification/

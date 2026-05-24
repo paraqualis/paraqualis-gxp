@@ -41,8 +41,11 @@ a blank execution-record block. A requirement without a test is incomplete.
 
 ## Step 4 — Assemble the package
 Collect the three sections and produce a single, client-ready **Qualification Package**
-in a **standalone `Qualification/` directory** (a deliverable — never write into the
-system under test, which was examined read-only), per the protocol's pack layout:
+in a **`Qualification/` directory inside the project being qualified**
+(`<project>/Qualification/`) by default — it lives and versions with the system (specify
+another location if a detached deliverable is preferred). The agents examined the system
+read-only and modify **no existing files**; the pack is a *new* folder added alongside.
+Per the protocol's pack layout:
 
 ```
 Qualification/
@@ -67,7 +70,7 @@ Qualification/
    list — the open items become rows here.)
 6. **Approval & governance block** — see below.
 
-Offer to write the whole pack to disk under a standalone `Qualification/` directory,
+Offer to write the whole pack to disk under `<project>/Qualification/` (or a specified location),
 then render the branded **Word** (`build_docx.py`, python-docx, ParaQualis palette) and
 **Excel** (`build_xlsx.py`, openpyxl — a sheet per xQ stage + Summary + Traceability) so
 it can be handed to a pharma client in md, .docx, and .xlsx. Markdown is the source of

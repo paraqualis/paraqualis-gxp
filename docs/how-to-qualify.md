@@ -102,7 +102,11 @@ system is running the scripts** — reading code is necessarily partial.
 
 ## 5. What you get — the `Qualification/` directory
 
-A standalone `Qualification/` folder (the system under test is never modified):
+By default a `Qualification/` folder is created **inside the project you qualified**
+(`<project>/Qualification/`), so it lives and versions with the system and sits where the
+gap-loop needs it. The engine *examines* the system read-only and modifies **no existing
+files** — it only adds this new folder. (Point it elsewhere if you want a detached
+deliverable.) It contains:
 
 ```
 Qualification/
