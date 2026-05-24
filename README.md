@@ -22,11 +22,15 @@ the folder name becomes the command's namespace prefix (`/family:command`).
 | `/eCFR:search` | Full-text search the eCFR and return matching citations with excerpts. |
 | `/eCFR:changes` | Show a part's amendment history — which sections changed and when. |
 | `/eCFR:compare` | Compare a section/part between two dates and show exactly what wording changed. |
+| `/eu-annex11:gap` | Gap-assess a system against EU GMP Annex 11, by clause, with severity and remediation. |
+| `/eu-annex11:checklist` | Generate a tailored Annex 11 controls checklist for validation or inspection readiness. |
+| `/eu-annex11:auditprep` | Prepare for an EU GMP inspection against Annex 11 — likely questions, evidence, weak points. |
+| `/eu-annex11:crosswalk` | Map Annex 11 against 21 CFR Part 11 — alignment, divergence, and what satisfies both. |
 
 The `eCFR:` family pulls live from the public [eCFR API](https://www.ecfr.gov/developers/documentation/api/v1)
-at runtime (no key required) and works for any CFR Title, not just 21.
-
-> An `eu-annex11:` family (EU GMP Annex 11) is planned.
+at runtime (no key required) and works for any CFR Title, not just 21. The
+`eu-annex11:` family reflects the established Annex 11 (2011) and flags the July 2025
+draft revision + Annex 22 (AI) as draft.
 
 ## Skills
 
@@ -66,12 +70,17 @@ it re-scans the commands and skills folders.
 │   │   ├── auditprep.md
 │   │   ├── gap.md
 │   │   └── checklist.md
-│   └── eCFR/
-│       ├── structure.md
-│       ├── text.md
-│       ├── search.md
-│       ├── changes.md
-│       └── compare.md
+│   ├── eCFR/
+│   │   ├── structure.md
+│   │   ├── text.md
+│   │   ├── search.md
+│   │   ├── changes.md
+│   │   └── compare.md
+│   └── eu-annex11/
+│       ├── gap.md
+│       ├── checklist.md
+│       ├── auditprep.md
+│       └── crosswalk.md
 ├── skills/
 │   ├── part11-advisor/
 │   │   ├── SKILL.md
