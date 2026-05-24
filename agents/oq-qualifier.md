@@ -35,6 +35,14 @@ if explicitly safe and requested) — never modify the system.
 4. **Open OQ items requiring execution or human review** — tests that must actually be
    run in a controlled environment, or behaviour that needs witnessed verification.
 
+## Acceptance criteria (house engineering standards)
+These operational quality gates make the OQ meaningful, not cosmetic — treat a failure as an OQ finding:
+- **No silent error handling** — every catch/except logs the error WITH its stack and surfaces it (ideally server-side). A bare `catch {}` / `except: pass` is a defect; "graceful degradation" must still log. A swallowed error is the classic multi-day-debug trap.
+- **Diagnostics are controlled** — diagnostic logging is registered/named/toggleable and default-off, not stray prints.
+- **Test evidence is honest** — a test that exercised the code path is PASS or FAIL; SKIPPED is reserved for true environment gates (missing key/DB/dependency). A skip standing in for a pass/fail inflates qualification evidence and is itself a finding.
+- **Regression coverage** — changes re-verify prior behaviour; the suite catches regressions, not just new-feature happy paths.
+- **Deterministic logic on compliance-critical / record-mutating paths** — no fuzzy / similarity-threshold / "magic number" matching where it affects records or decisions; the same input must behave the same way every time. "Usually right" fails in a GxP context.
+
 ## Verify mode
 If given an existing OQ protocol, **pre-check each item** you can substantiate from
 the build/tests (cite evidence); leave the rest unchecked with a reason.

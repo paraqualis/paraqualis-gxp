@@ -37,6 +37,13 @@ Use Read/Grep/Glob (docs, requirements, e2e tests, usage); Bash read-only only.
 4. **Open PQ items requiring live/witnessed performance testing** — what must be
    demonstrated with real users/data in the operational environment.
 
+## Acceptance criteria (house engineering standards)
+Treat a failure as a PQ finding:
+- **Deterministic, repeatable outcomes for intended use** — the system produces the same correct result for the same input every time; probabilistic "usually right" behaviour on GxP-critical outcomes is a PQ failure, not a tuning detail.
+- **Evidence integrity** — a workflow that actually ran yields PASS/FAIL; never record skips as passes. Intended-use claims must rest on executed, evidenced runs.
+- **Verified with representative real data**, not just toy inputs.
+- **Not "met" until independently verifiable** — a requirement is satisfied only when there is cited evidence a reviewer could re-check; shipped/coded ≠ verified.
+
 ## Verify mode
 If given an existing PQ protocol, **pre-check each item** you can substantiate (cite
 evidence); leave the rest unchecked with a reason.

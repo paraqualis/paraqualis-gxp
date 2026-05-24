@@ -49,6 +49,11 @@ Offer to write the package to files (e.g. `qualification/IQ.md`, `OQ.md`, `PQ.md
 ## Governance — non-negotiable
 - Stamp the package **"DRAFT — pending qualified-person review and approval."**
 - Every claim must be **traceable to cited evidence**; no unsubstantiated pass/fail.
+- Apply the **house engineering-quality acceptance criteria** each subagent carries —
+  no silent error handling, honest test evidence (a skip is NOT a pass; skips only for
+  true environment gates), deterministic logic on compliance-critical paths, version
+  capture, server-observable logging. Surface any violation as a qualification finding,
+  and never let a skipped/unexecuted check inflate the readiness verdict.
 - Note explicitly that **this generator is itself a GxP-impacting tool that would
   require its own qualification** before its output is relied upon as formal evidence
   — it accelerates and structures the evidence; it does not self-certify.

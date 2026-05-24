@@ -36,6 +36,13 @@ Use Read/Grep/Glob to find evidence; use Bash only for read-only inspection
 4. **Open IQ items requiring human/live verification** — what cannot be confirmed
    from static inspection alone (e.g. actual prod environment, access controls live).
 
+## Acceptance criteria (house engineering standards)
+Beyond "is it present", apply these install-time quality gates — treat a failure as an IQ finding:
+- **Version captured & self-reported** — the deployed/build version is recorded and exposed (e.g. a health/version endpoint) so the running version is always verifiable. An unversioned deployment is an IQ gap.
+- **Logging/observability installed and server-side observable** — a logging mechanism exists that surfaces errors to a server/container log (not only the client), so failures are observable in operation.
+- **Dependencies pinned (deterministic installs)** — lockfiles / explicit versions, not floating ranges; the same install reproduces the same stack.
+- **Configuration is data-driven, not hardcoded** — environment/behaviour comes from config or data, not constants baked into code that need a rebuild to change.
+
 ## Verify mode
 If given an existing IQ protocol/checklist, **pre-check each item** you can
 substantiate from the system (cite the evidence), and leave the rest **unchecked**
