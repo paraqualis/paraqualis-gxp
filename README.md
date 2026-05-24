@@ -37,6 +37,7 @@ their description — no slash command to type. Each is a folder with a `SKILL.m
 | Skill | What it does |
 |---|---|
 | `part11-advisor` | Always-available 21 CFR Part 11 expertise. Fires on any electronic-records/signatures, audit-trail, or Part 11 compliance question, and reasons against the **verbatim Part 11 text** bundled at `reference/21-cfr-part-11.md`. |
+| `gamp-advisor` | Always-available GAMP 5 (2nd ed.) CSV expertise, including **AI/ML & GenAI** validation (per the ISPE GAMP Guide: Artificial Intelligence, July 2025, and EU draft Annex 22). Fires on software-category, validation-rigor, IQ/OQ/PQ-scope, or AI-system questions, reasoning against bundled framework references (original summaries — GAMP 5 and the ISPE AI Guide are ISPE-copyrighted, so their text is not reproduced). |
 
 ## Install (any machine)
 
@@ -72,10 +73,15 @@ it re-scans the commands and skills folders.
 │       ├── changes.md
 │       └── compare.md
 ├── skills/
-│   └── part11-advisor/
+│   ├── part11-advisor/
+│   │   ├── SKILL.md
+│   │   └── reference/
+│   │       └── 21-cfr-part-11.md       # verbatim Part 11, bundled
+│   └── gamp-advisor/
 │       ├── SKILL.md
 │       └── reference/
-│           └── 21-cfr-part-11.md   # verbatim Part 11, bundled
+│           ├── gamp5-category-framework.md   # original summary (not ISPE text)
+│           └── ai-ml-validation.md           # AI/ML validation themes
 ├── install.sh        # symlinks commands + skills into ~/.claude/
 ├── LICENSE           # MIT
 └── README.md
