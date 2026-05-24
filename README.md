@@ -26,6 +26,7 @@ the folder name becomes the command's namespace prefix (`/family:command`).
 | `/eu-annex11:checklist` | Generate a tailored Annex 11 controls checklist for validation or inspection readiness. |
 | `/eu-annex11:auditprep` | Prepare for an EU GMP inspection against Annex 11 — likely questions, evidence, weak points. |
 | `/eu-annex11:crosswalk` | Map Annex 11 against 21 CFR Part 11 — alignment, divergence, and what satisfies both. |
+| `/qualify` | Build (or verify) an IQ/OQ/PQ qualification package for a system by fanning out to the xQ subagents **in parallel**. |
 
 The `eCFR:` family pulls live from the public [eCFR API](https://www.ecfr.gov/developers/documentation/api/v1)
 at runtime (no key required) and works for any CFR Title, not just 21. The
@@ -42,6 +43,23 @@ their description — no slash command to type. Each is a folder with a `SKILL.m
 |---|---|
 | `part11-advisor` | Always-available 21 CFR Part 11 expertise. Fires on any electronic-records/signatures, audit-trail, or Part 11 compliance question, and reasons against the **verbatim Part 11 text** bundled at `reference/21-cfr-part-11.md`. |
 | `gamp-advisor` | Always-available GAMP 5 (2nd ed.) CSV expertise, including **AI/ML & GenAI** validation (per the ISPE GAMP Guide: Artificial Intelligence, July 2025, and EU draft Annex 22). Fires on software-category, validation-rigor, IQ/OQ/PQ-scope, or AI-system questions, reasoning against bundled framework references (original summaries — GAMP 5 and the ISPE AI Guide are ISPE-copyrighted, so their text is not reproduced). |
+
+## Subagents
+
+Subagents live under `agents/` and are specialized sub-Claudes the main agent
+delegates to, **each in its own isolated context**. That isolation lets several run
+**in parallel**. The `/qualify` command orchestrates these three concurrently:
+
+| Subagent | Stage | Examines |
+|---|---|---|
+| `iq-qualifier` | Installation Qualification | the tech stack — runtimes, dependencies, infra, config |
+| `oq-qualifier` | Operational Qualification | how it's built — functions, config logic, tests, pipeline |
+| `pq-qualifier` | Performance Qualification | does it do its job — intended use, requirements ↔ behaviour |
+
+They produce **draft, traceable evidence** (generate mode) or **pre-check an existing
+pack** (verify mode); `/qualify` assembles the consolidated package. All output is
+stamped draft pending qualified-person review — the generator itself is a GxP-impacting
+tool that would require its own qualification before its output is relied upon.
 
 ## Install (any machine)
 
@@ -76,11 +94,16 @@ it re-scans the commands and skills folders.
 │   │   ├── search.md
 │   │   ├── changes.md
 │   │   └── compare.md
-│   └── eu-annex11/
-│       ├── gap.md
-│       ├── checklist.md
-│       ├── auditprep.md
-│       └── crosswalk.md
+│   ├── eu-annex11/
+│   │   ├── gap.md
+│   │   ├── checklist.md
+│   │   ├── auditprep.md
+│   │   └── crosswalk.md
+│   └── qualify.md          # orchestrator: fans out to the xQ subagents
+├── agents/                 # subagents the main agent delegates to (run in parallel)
+│   ├── iq-qualifier.md
+│   ├── oq-qualifier.md
+│   └── pq-qualifier.md
 ├── skills/
 │   ├── part11-advisor/
 │   │   ├── SKILL.md
@@ -91,7 +114,7 @@ it re-scans the commands and skills folders.
 │       └── reference/
 │           ├── gamp5-category-framework.md   # original summary (not ISPE text)
 │           └── ai-ml-validation.md           # AI/ML validation themes
-├── install.sh        # symlinks commands + skills into ~/.claude/
+├── install.sh        # symlinks commands + skills + agents into ~/.claude/
 ├── LICENSE           # MIT
 └── README.md
 ```

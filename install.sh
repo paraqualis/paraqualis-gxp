@@ -54,5 +54,6 @@ link_tree() {
 
 link_tree "$REPO_DIR/commands" "$CLAUDE_DIR/commands" "command families"
 link_tree "$REPO_DIR/skills"   "$CLAUDE_DIR/skills"   "skills"
+link_tree "$REPO_DIR/agents"   "$CLAUDE_DIR/agents"   "subagents"
 
-echo "Done. Restart Claude Code so it picks up the new commands and skills."
+echo "Done. Restart Claude Code so it picks up the new commands, skills, and agents."
