@@ -28,6 +28,16 @@ at runtime (no key required) and works for any CFR Title, not just 21.
 
 > An `eu-annex11:` family (EU GMP Annex 11) is planned.
 
+## Skills
+
+Skills live under `skills/` and are **auto-invoked by Claude** when a request matches
+their description — no slash command to type. Each is a folder with a `SKILL.md`
+(name + description + instructions) and optional bundled reference files.
+
+| Skill | What it does |
+|---|---|
+| `part11-advisor` | Always-available 21 CFR Part 11 expertise. Fires on any electronic-records/signatures, audit-trail, or Part 11 compliance question, and reasons against the **verbatim Part 11 text** bundled at `reference/21-cfr-part-11.md`. |
+
 ## Install (any machine)
 
 ```bash
@@ -36,10 +46,12 @@ cd paraqualis-skills
 ./install.sh
 ```
 
-`install.sh` symlinks each command family into `~/.claude/commands/`, so the
-commands stay live globally while this repo remains the single source of truth.
-Edit a command here, and the change is live everywhere immediately — no copy step.
-**Restart Claude Code after installing** so it re-scans the commands folder.
+`install.sh` symlinks each command family into `~/.claude/commands/` and each skill
+into `~/.claude/skills/`, so they stay live globally while this repo remains the
+single source of truth. Edit anything here and the change is live everywhere
+immediately — no copy step. The installer self-heals: stale links from renamed or
+removed items are pruned automatically. **Restart Claude Code after installing** so
+it re-scans the commands and skills folders.
 
 ## Repo layout
 
@@ -59,7 +71,12 @@ Edit a command here, and the change is live everywhere immediately — no copy s
 │       ├── search.md
 │       ├── changes.md
 │       └── compare.md
-├── install.sh        # symlinks command families into ~/.claude/commands/
+├── skills/
+│   └── part11-advisor/
+│       ├── SKILL.md
+│       └── reference/
+│           └── 21-cfr-part-11.md   # verbatim Part 11, bundled
+├── install.sh        # symlinks commands + skills into ~/.claude/
 ├── LICENSE           # MIT
 └── README.md
 ```
