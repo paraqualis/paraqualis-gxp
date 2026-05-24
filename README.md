@@ -17,14 +17,22 @@ the folder name becomes the command's namespace prefix (`/family:command`).
 | `/cfr21-11:auditprep` | Prepare for an FDA inspection against 21 CFR Part 11 — likely questions, evidence to assemble, weak points. |
 | `/cfr21-11:gap` | Gap-assess a system/process against Part 11, with severity and remediation. |
 | `/cfr21-11:checklist` | Generate a tailored Part 11 controls checklist for validation or audit. |
+| `/eCFR:structure` | Show the structure (headings only, no content) two levels below any eCFR reference — any Title. |
+| `/eCFR:text` | Fetch the full current regulatory text of a CFR section or part. |
+| `/eCFR:search` | Full-text search the eCFR and return matching citations with excerpts. |
+| `/eCFR:changes` | Show a part's amendment history — which sections changed and when. |
+| `/eCFR:compare` | Compare a section/part between two dates and show exactly what wording changed. |
+
+The `eCFR:` family pulls live from the public [eCFR API](https://www.ecfr.gov/developers/documentation/api/v1)
+at runtime (no key required) and works for any CFR Title, not just 21.
 
 > An `eu-annex11:` family (EU GMP Annex 11) is planned.
 
 ## Install (any machine)
 
 ```bash
-git clone <your-github-url> "21.11 and GAMP Skills"
-cd "21.11 and GAMP Skills"
+git clone git@github.com:DeepJam/paraqualis-skills.git
+cd paraqualis-skills
 ./install.sh
 ```
 
@@ -41,10 +49,16 @@ Edit a command here, and the change is live everywhere immediately — no copy s
 │   ├── gamp/
 │   │   ├── assess.md
 │   │   └── testplan.md
-│   └── cfr21-11/
-│       ├── auditprep.md
-│       ├── gap.md
-│       └── checklist.md
+│   ├── cfr21-11/
+│   │   ├── auditprep.md
+│   │   ├── gap.md
+│   │   └── checklist.md
+│   └── eCFR/
+│       ├── structure.md
+│       ├── text.md
+│       ├── search.md
+│       ├── changes.md
+│       └── compare.md
 ├── install.sh        # symlinks command families into ~/.claude/commands/
 ├── LICENSE           # MIT
 └── README.md

@@ -25,6 +25,21 @@ echo "into:"
 echo "  $DEST"
 echo
 
+# Prune symlinks we previously created that now dangle — e.g. a command or
+# family renamed/removed in the repo. Only touch links pointing back into THIS
+# repo, and only if their target no longer exists; never disturb the user's own.
+for link in "$DEST"/*; do
+  [ -L "$link" ] || continue
+  case "$(readlink "$link")" in
+    "$REPO_DIR"/*)
+      if [ ! -e "$link" ]; then
+        rm -f "$link"
+        echo "  pruned   $(basename "$link") (target gone)"
+      fi
+      ;;
+  esac
+done
+
 for entry in "$SRC"/*; do
   [ -e "$entry" ] || continue            # skip if commands/ is empty
   name="$(basename "$entry")"
