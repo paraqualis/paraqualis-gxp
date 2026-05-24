@@ -3,7 +3,7 @@
 with a sheet per xQ stage plus Summary and Traceability sheets.
 
 Markdown is the source of truth; this parses the tables out of docs/*.md.
-    python3 build_xlsx.py   ->   docs/RegCheck-Qualification-Pack.xlsx
+    python3 build_xlsx.py   ->   docs/Qualification-Pack.xlsx
 """
 import re
 from pathlib import Path
@@ -12,7 +12,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 DOCS = Path(__file__).parent / "docs"
-OUT = DOCS / "RegCheck-Qualification-Pack.xlsx"
+OUT = DOCS / "Qualification-Pack.xlsx"
 
 DEEP_BLUE = "276BB2"
 MINT = "E7F3EB"
