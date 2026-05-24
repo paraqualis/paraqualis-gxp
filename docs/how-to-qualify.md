@@ -16,16 +16,27 @@ fans out to three specialist sub-agents in parallel, and assembles a client-read
 
 ## 1. One-time setup (per machine)
 
-```bash
-git clone git@github.com:DeepJam/paraqualis-skills.git
-cd paraqualis-skills
-./install.sh            # symlinks the commands, skills, and sub-agents into ~/.claude/
-```
-Then **restart Claude Code** so it registers the new command, skills, and sub-agents.
+**Step 1 — get the files.** Use whichever route your access allows. *(The repository is
+private — you must first be granted access by ParaQualis, or use a copy they provide.)*
+- **SSH** (collaborators with an SSH key on the repo):
+  `git clone git@github.com:DeepJam/paraqualis-skills.git`
+- **HTTPS** (collaborators — prompts for a GitHub token/login):
+  `git clone https://github.com/DeepJam/paraqualis-skills.git`
+- **No git, or no access configured:** on the GitHub page choose **Code → Download ZIP**
+  and unzip it.
 
-- **Check it's live:** type `/` and confirm `/qualify` appears.
-- **Word/Excel output** needs the Python libraries `python-docx` and `openpyxl`
-  (`pip install python-docx openpyxl`). Markdown and the scripts work without them.
+**Step 2 — install.** From the project folder:
+```bash
+cd paraqualis-skills
+./install.sh          # or:  bash install.sh   (use this if it isn't executable, e.g. from a ZIP)
+```
+This symlinks the commands, skills, and sub-agents into `~/.claude/`. Re-run it any time
+you pull updates or add a new command family / skill / agent.
+
+**Step 3 — restart Claude Code** so it registers them. Confirm with `/` → `/qualify` appears.
+
+**Optional — Word/Excel output:** `pip install python-docx openpyxl`. Markdown and the test
+scripts work without them.
 
 No assumptions are made about the application's technology: the engine discovers the
 language, runtime, databases (zero, one, or many — of any type), and services itself.
