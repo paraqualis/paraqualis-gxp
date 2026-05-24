@@ -58,7 +58,7 @@ delegates to, **each in its own isolated context**. That isolation lets several 
 
 They produce **draft, traceable evidence** (generate mode) or **pre-check an existing
 pack** (verify mode); `/qualify` assembles the consolidated package. All output is
-stamped draft pending qualified-person review — the generator itself is a GxP-impacting
+stamped draft pending review by appropriately qualified and authorized personnel — the generator itself is a GxP-impacting
 tool that would require its own qualification before its output is relied upon.
 
 Every item follows the **[xQ Qualification Protocol](docs/xq-qualification-protocol.md)**:

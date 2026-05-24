@@ -155,7 +155,7 @@ NOT required; both builders use pure-Python libraries.)
 
 ## Governance
 
-- Whole pack stamped **DRAFT — pending qualified-person review and approval.**
+- Whole pack stamped **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 - **No skip-inflation** — a skipped/unexecuted test is not a pass (house standard).
 - The generator itself is a **GxP-impacting tool that would require its own
   qualification**; it structures and accelerates evidence, it does not self-certify.

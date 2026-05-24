@@ -70,7 +70,7 @@ it can be handed to a pharma client in md, .docx, and .xlsx. Markdown is the sou
 truth; Word/Excel are generated, never hand-edited.
 
 ## Governance — non-negotiable
-- Stamp the package **"DRAFT — pending qualified-person review and approval."**
+- Stamp the package **"DRAFT — pending review and approval by appropriately qualified and authorized personnel."**
 - Every claim must be **traceable to cited evidence**; no unsubstantiated pass/fail.
 - Apply the **house engineering-quality acceptance criteria** each subagent carries —
   no silent error handling, honest test evidence (a skip is NOT a pass; skips only for
