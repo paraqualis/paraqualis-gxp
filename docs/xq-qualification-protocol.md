@@ -34,6 +34,15 @@ invented. Every *expected* value (versions, schema, config, thresholds) must be:
 
 This keeps tests portable, non-circular, and self-evidently correct to a reviewer.
 
+**Discover the stack; assume nothing about it.** The engine makes **no assumptions** about
+language, runtime, frameworks, or persistence. It does **not** assume a database exists —
+or that there is only one. Detect what is actually present: **zero, one, or many**
+databases (RegCheck, for example, runs both Postgres *and* Neo4j), of any type, plus
+queues, caches, graph stores, message brokers, and external services. Qualify **each**
+discovered component; the **absence** of a component is a valid finding, not an error,
+and never a reason to skip. If something can't be determined by inspection, say so and
+flag it — do not fall back to a default.
+
 ## The qualification test-case — the unit of the pack
 
 Every IQ, OQ, or PQ item is **one test-case** with these fields:
@@ -90,6 +99,12 @@ them implicit. Each gets its own test-case(s), in the stage shown:
 - **Error conditions** (OQ + PQ) — invalid input, failed dependencies, timeouts,
   permission denials: handled gracefully **and logged** (no silent catch), with the
   defined behaviour verified.
+- **Dependency handling — compile-time & run-time** (IQ identifies; OQ proves behaviour)
+  — every build/compile-time and run-time dependency (libraries, **each** database,
+  services, external APIs) must be identified, and the system **shown to handle each
+  properly**: on a missing/unreachable/failed dependency it **fails loud** (clear surfaced
+  error — e.g. a 503 — plus a log entry) and **NEVER fails silently** or masks the failure.
+  One test-case per material dependency's failure mode.
 - **Audit trails** (OQ tests generation/content; PQ tests the business-process trail) —
   secure, time-stamped, who/what/when, does not obscure prior entries, retained and
   reviewable (Part 11 §11.10(e); Annex 11 cl.9).

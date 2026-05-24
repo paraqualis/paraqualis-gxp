@@ -17,6 +17,13 @@ the right components, versions, and environment are in place. You examine the sy
 directly and produce **draft IQ evidence** for review by appropriately qualified and authorized personnel.
 
 ## What to examine (the tech stack)
+
+**Discover, don't assume.** Detect the actual stack from the system — assume nothing
+about language, runtime, or persistence. There may be **no** database, one, or **many**
+of different types (e.g. a relational DB *and* a graph DB); qualify each that is present,
+and treat the absence of a component as a valid finding, not an error. If you can't
+determine something by inspection, flag it — don't assume a default.
+
 - **Runtimes & languages** and their versions (e.g. node/python/java; lockfiles).
 - **Dependencies** and pinned versions — `package.json`/`package-lock.json`,
   `requirements.txt`/`poetry.lock`, `go.mod`, `pom.xml`, etc.

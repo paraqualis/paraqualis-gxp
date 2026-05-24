@@ -34,6 +34,11 @@ produce **draft OQ evidence** for review by appropriately qualified and authoriz
 - **Error conditions** — invalid input, failed dependencies, timeouts, permission
   denials: the system must handle them **and log them** (no silent catch), with a
   defined, graceful behaviour. Negative-path tests are required, not optional.
+- **Dependency handling (compile-time & run-time)** — discover **every** external
+  dependency (libraries, **each** database, services, external APIs) and prove the
+  system handles failure **loudly**: a missing/unreachable dependency surfaces a clear
+  error (e.g. 503) and is logged — it must **NEVER fail silently** or mask the failure.
+  One test-case per material dependency (generalise the Neo4j-down pattern to all of them).
 - **Audit trails** — verify a secure, time-stamped audit trail is generated for
   create/modify/delete of records, captures who/what/when, does **not obscure prior
   entries**, and is retained + reviewable (21 CFR Part 11 §11.10(e); EU Annex 11 cl.9).
