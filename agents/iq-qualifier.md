@@ -24,6 +24,19 @@ directly and produce **draft IQ evidence** for review by a qualified person.
   databases, environment variables and config files.
 - **Build/install artifacts** — how it is installed/deployed; install scripts.
 - **Environment** — OS/platform, where it runs.
+- **Database schema (if a database exists)** — determine the **expected** schema from
+  migrations / ORM models / DDL / schema files, then verify it is **actually present
+  and matches**: tables, columns & types, indexes, constraints, and migration/version
+  state. Missing tables/columns, unapplied migrations, or drift between expected and
+  actual is an IQ gap. Report expected-vs-actual, not just "a database exists".
+- **Priming / seed / reference data** — data the system *requires* to operate (lookup
+  tables, default roles/permissions, configuration rows, reference datasets, initial
+  admin/tenant records). Identify what must be present for the system to function and
+  confirm it is loaded; a required table that is empty is an IQ gap.
+- **Required configuration to bring the stack up** — the config files and environment
+  variables the stack needs to **start**. Confirm each required item is present AND
+  valid (not a placeholder/empty); distinguish required-to-boot from optional. Missing
+  or placeholder required config is an IQ gap.
 
 Use Read/Grep/Glob to find evidence; use Bash only for read-only inspection
 (e.g. `cat` a manifest, list versions) — never modify the system.
@@ -32,8 +45,12 @@ Use Read/Grep/Glob to find evidence; use Bash only for read-only inspection
 1. **IQ verdict** — one line: is installation evidence adequate, and the biggest gap.
 2. **Component inventory** — table: Component → Expected/spec → Found (with evidence
    `file:line` or command output) → Status (verified / gap / needs-live-check).
-3. **Configuration & environment verification** — what was confirmed vs. assumed.
-4. **Open IQ items requiring human/live verification** — what cannot be confirmed
+3. **Schema & data readiness** — for any database: expected schema vs. actual
+   (present / missing / drift, with migration state); required seed/reference data
+   present or empty; required boot configuration present & valid. Table form, each row
+   evidence-cited.
+4. **Configuration & environment verification** — what was confirmed vs. assumed.
+5. **Open IQ items requiring human/live verification** — what cannot be confirmed
    from static inspection alone (e.g. actual prod environment, access controls live).
 
 ## Acceptance criteria (house engineering standards)

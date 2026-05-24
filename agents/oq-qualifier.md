@@ -19,6 +19,12 @@ produce **draft OQ evidence** for review by a qualified person.
 ## What to examine (how it's built)
 - **Functional units** — modules, services, endpoints, key functions and what they do.
 - **Configuration logic** — how configurable behaviour is implemented and constrained.
+- **Minimum configuration to USE the system** — the smallest set of configuration that
+  takes the system from "running" to "usable for its intended purpose": required
+  settings, user roles/permissions, master/reference data, integration endpoints &
+  credentials, feature/tenant or workflow definitions. Identify what an operator MUST
+  configure before the system can actually be used, and verify that minimum configured
+  state is defined, documented, and achievable — "it boots" is not "it's usable".
 - **Automated tests** — presence, scope, and (if runnable read-only) results; map
   tests to the functions they exercise. Note coverage gaps.
 - **Error handling & boundaries** — input validation, negative-path handling.
@@ -32,7 +38,11 @@ if explicitly safe and requested) — never modify the system.
 2. **Function ↔ test traceability** — table: Function → Spec/intended behaviour →
    Test/evidence (`file:line`) → Status (verified / gap / needs-execution).
 3. **Operational checks** — sequencing, boundary, and error-handling evidence.
-4. **Open OQ items requiring execution or human review** — tests that must actually be
+4. **Minimum-configuration baseline** — the documented minimum configuration that
+   makes the system usable for its purpose: each required item, how it's set, and how
+   it's verified. Flag gaps where the path from *installed* → *usable* is undefined or
+   undocumented.
+5. **Open OQ items requiring execution or human review** — tests that must actually be
    run in a controlled environment, or behaviour that needs witnessed verification.
 
 ## Acceptance criteria (house engineering standards)
