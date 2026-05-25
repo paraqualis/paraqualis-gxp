@@ -18,7 +18,14 @@ generated from the repo itself, so it always matches what's installed.
 | **Command** | A saved prompt you trigger with `/name` | type it | `/cfr21-11:gap` |
 | **Skill** | Expertise Claude pulls in **automatically** when your request matches it | just ask in plain English | `part11-advisor` |
 | **Sub-agent** | A specialist Claude **delegates to**, in its own context (several can run in parallel) | don't invoke directly | `iq-qualifier` |
+| **MCP server (tool)** | Real executable **tools** that reach external systems (APIs, databases) — code, not a prompt | just ask; Claude calls the tool | `openfda` (recalls/labels/events) |
 | **The qualification engine** | `/qualify` + three sub-agents that produce an IQ/OQ/PQ pack | run `/qualify <app>` | see `how-to-qualify.md` |
+
+**Tools (MCP servers)** live under `mcp-servers/`. The first is **openFDA** — it gives
+Claude tools to query FDA recalls, drug labels, and adverse-event reports directly. It's
+opt-in (needs `pip install mcp` and a one-line registration); see
+`mcp-servers/openfda/README.md`. Unlike commands/skills, an MCP server is a running
+program, so it isn't symlinked by `install.sh` — you register it once with Claude Code.
 
 Commands live in `commands/` (a sub-folder = a `family:` prefix). Skills live in
 `skills/`. Sub-agents live in `agents/`. `install.sh` symlinks all three into

@@ -38,6 +38,10 @@ at runtime (no key required) and works for any CFR Title, not just 21. The
 `eu-annex11:` family reflects the established Annex 11 (2011) and flags the July 2025
 draft revision + Annex 22 (AI) as draft.
 
+**Tools (MCP server):** `mcp-servers/openfda/` exposes the FDA open data API to Claude as
+callable tools (recalls, drug labels, adverse events). Opt-in — `pip install mcp` + a
+one-line registration; see its [README](mcp-servers/openfda/README.md).
+
 ## Skills
 
 Skills live under `skills/` and are **auto-invoked by Claude** when a request matches
