@@ -27,6 +27,7 @@ the folder name becomes the command's namespace prefix (`/family:command`).
 | `/eu-annex11:auditprep` | Prepare for an EU GMP inspection against Annex 11 — likely questions, evidence, weak points. |
 | `/eu-annex11:crosswalk` | Map Annex 11 against 21 CFR Part 11 — alignment, divergence, and what satisfies both. |
 | `/qualify` | Build (or verify) an IQ/OQ/PQ qualification package for a system by fanning out to the xQ subagents **in parallel**. |
+| `/openfda:setup` | Detect an openFDA API key; if missing, walk the user through getting a free one (instant) and saving it to a shell file of their choice. |
 
 The `eCFR:` family pulls live from the public [eCFR API](https://www.ecfr.gov/developers/documentation/api/v1)
 at runtime (no key required) and works for any CFR Title, not just 21. The
@@ -112,6 +113,8 @@ it re-scans the commands and skills folders.
 │   │   ├── checklist.md
 │   │   ├── auditprep.md
 │   │   └── crosswalk.md
+│   ├── openfda/
+│   │   └── setup.md        # get/configure a free openFDA API key
 │   └── qualify.md          # orchestrator: fans out to the xQ subagents
 ├── agents/                 # subagents the main agent delegates to (run in parallel)
 │   ├── iq-qualifier.md
