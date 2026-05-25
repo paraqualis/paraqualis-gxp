@@ -5,6 +5,10 @@ GAMP 5, and 21 CFR Part 11 compliance work.
 
 Copyright © 2026 ParaQualis LLC. Released under the [MIT License](LICENSE).
 
+> **New here? Start with [docs/OVERVIEW.md](docs/OVERVIEW.md)** — the whole toolkit at a
+> glance, with a live catalog of every command, skill, and sub-agent (auto-generated, so
+> it never drifts). Then [docs/how-to-qualify.md](docs/how-to-qualify.md) for the `/qualify` engine.
+
 ## What's here
 
 Commands are grouped into families. Each family is a folder under `commands/`;
