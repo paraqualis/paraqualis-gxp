@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# ParaQualis Skills pre-commit hook.
+# Keeps docs/OVERVIEW.md's catalog in sync with the repo (commands/skills/agents).
+# Text-only and cheap; best-effort — it never blocks a commit. The Word (.docx) docs are
+# binary and are rendered on demand via `python3 docs/build_docs.py`, NOT here.
+#
+# Enabled by `git config core.hooksPath .githooks` (install.sh does this automatically).
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+if [ -f "$ROOT/docs/build_catalog.py" ]; then
+  python3 "$ROOT/docs/build_catalog.py" >/dev/null 2>&1 && git add "$ROOT/docs/OVERVIEW.md" 2>/dev/null
+  rm -rf "$ROOT/docs/__pycache__" 2>/dev/null
+fi
+exit 0

@@ -56,4 +56,11 @@ link_tree "$REPO_DIR/commands" "$CLAUDE_DIR/commands" "command families"
 link_tree "$REPO_DIR/skills"   "$CLAUDE_DIR/skills"   "skills"
 link_tree "$REPO_DIR/agents"   "$CLAUDE_DIR/agents"   "subagents"
 
+# If run inside the source repo, enable the tracked git hook that keeps docs/OVERVIEW.md's
+# catalog in sync on every commit. Harmless elsewhere.
+if [ -d "$REPO_DIR/.git" ] && [ -d "$REPO_DIR/.githooks" ]; then
+  git -C "$REPO_DIR" config core.hooksPath .githooks 2>/dev/null \
+    && echo "git hooks: core.hooksPath -> .githooks (auto-refreshes the docs catalog)"
+fi
+
 echo "Done. Restart Claude Code so it picks up the new commands, skills, and agents."

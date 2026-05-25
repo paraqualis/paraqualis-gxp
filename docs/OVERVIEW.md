@@ -66,15 +66,18 @@ Commands live in `commands/` (a sub-folder = a `family:` prefix). Skills live in
 
 ## Keeping this document current
 
-The narrative above is hand-written; the **catalog below is generated**. After adding or
-renaming anything, run:
+The narrative above is hand-written; the **catalog below is generated** from the repo, so
+it can't drift. Two levels of automation:
 
-```bash
-python3 docs/build_catalog.py     # refresh the catalog from the repo
-```
+- **Automatic (catalog):** a git **pre-commit hook** (`.githooks/pre-commit`, enabled by
+  `install.sh`) re-runs `build_catalog.py` and re-stages this file on every commit — so the
+  Markdown catalog is always current without you remembering anything.
+- **On demand (Word):** run `python3 docs/build_docs.py` to refresh the catalog **and**
+  render the branded Word versions (`OVERVIEW.docx`, `how-to-qualify.docx`,
+  `xq-qualification-protocol.docx`). Do this before sharing — the `.docx` are binary, so
+  they're not rebuilt on every commit.
 
-Then commit. (Optional: `python3 qualification-pack-template/build_docx.py` style
-rendering isn't wired for this file — ask if you want a Word/PDF version of the overview.)
+You only hand-edit the narrative when the *concepts* change; the lists look after themselves.
 
 ---
 

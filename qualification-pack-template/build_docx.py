@@ -143,6 +143,8 @@ def render(md_path: Path, out_path: Path):
         flush_table()
 
         stripped = ln.strip()
+        if stripped.startswith("<!--") and stripped.endswith("-->"):
+            i += 1; continue                              # HTML comment / marker → skip
         if stripped in ("---", "***", "___"):
             i += 1; continue                              # horizontal rule → skip
         if ln.startswith("#### "):
