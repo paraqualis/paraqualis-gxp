@@ -76,6 +76,38 @@ artifact in `scripts/`), acceptance criteria, and an execution record — plus a
 scheme, automated-vs-manual marking, a regulatory traceability matrix, and a three-layer
 evidence model for AI/ML systems.
 
+## Hooks
+
+Hooks live under `hooks/` and are scripts Claude Code runs **automatically on an event**
+(before/after a tool, on a prompt, when it finishes). Unlike a command or skill, a hook is
+**deterministic** — it always fires, with no model turn — which makes hooks the right place
+for safety and governance controls.
+
+| Hook | Event | What it does |
+|---|---|---|
+| `protect-approved-documents.py` | `PreToolUse` | Blocks any edit to a file containing the marker `<!-- PARAQUALIS-LOCK: approved -->`. Approved records can't be overwritten in place; revise via a new version under change control. |
+
+Register a hook in `settings.json` (see [`hooks/README.md`](hooks/README.md) for user vs.
+project scope). The **plugin** bundles this hook automatically via `hooks/hooks.json`.
+
+## Plugin (one-command install)
+
+The whole toolkit is packaged as a **Claude Code plugin** — the manifest lives in
+`.claude-plugin/plugin.json` and a single-plugin marketplace in
+`.claude-plugin/marketplace.json`. The existing `commands/`, `skills/`, `agents/`, and
+`hooks/` folders are auto-discovered, so installing pulls in everything at once:
+
+```
+/plugin marketplace add DeepJam/paraqualis-skills
+/plugin install paraqualis-skills@paraqualis
+```
+
+(The GitHub path requires the repo to be public; to test locally, point the first command
+at the repo folder instead.) `install.sh` + symlinks remain the **local dev** workflow; the
+plugin is the **distribution** path. The openFDA MCP server is *not* auto-bundled — it needs
+`pip install mcp`, so it stays the documented manual step in its
+[README](mcp-servers/openfda/README.md).
+
 ## Using the qualification engine
 
 **Full usage guide: [docs/how-to-qualify.md](docs/how-to-qualify.md)** (also available as a
@@ -83,7 +115,10 @@ Word document, authored by ParaQualis LLC) — how to qualify any application, w
 Claude, how to trigger `/qualify`, what to expect, every output in the `Qualification/`
 directory, and the gap-closure loop.
 
-## Install (any machine)
+## Install from source (dev workflow)
+
+For one-command end-user install, see **[Plugin](#plugin-one-command-install)** above. The
+from-source path below is the development workflow — edit a file and it's live immediately:
 
 ```bash
 git clone git@github.com:DeepJam/paraqualis-skills.git
@@ -138,6 +173,14 @@ it re-scans the commands and skills folders.
 │       └── reference/
 │           ├── gamp5-category-framework.md   # original summary (not ISPE text)
 │           └── ai-ml-validation.md           # AI/ML validation themes
+├── hooks/                # Claude Code event hooks (deterministic, no model turn)
+│   ├── protect-approved-documents.py   # PreToolUse: block edits to locked records
+│   ├── hooks.json        # wires the hook into the plugin (${CLAUDE_PLUGIN_ROOT})
+│   └── README.md
+├── .claude-plugin/       # makes the repo an installable plugin
+│   ├── plugin.json       # manifest
+│   └── marketplace.json  # single-plugin storefront
+├── mcp-servers/openfda/  # openFDA MCP server (opt-in; needs `pip install mcp`)
 ├── docs/
 │   └── xq-qualification-protocol.md   # the test-case + pack abstraction for /qualify
 ├── install.sh        # symlinks commands + skills + agents into ~/.claude/

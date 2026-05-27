@@ -11,7 +11,7 @@ generated from the repo itself, so it always matches what's installed.
 
 ---
 
-## The four building blocks
+## The six building blocks
 
 | Block | What it is | You… | Example |
 |---|---|---|---|
@@ -19,7 +19,11 @@ generated from the repo itself, so it always matches what's installed.
 | **Skill** | Expertise Claude pulls in **automatically** when your request matches it | just ask in plain English | `part11-advisor` |
 | **Sub-agent** | A specialist Claude **delegates to**, in its own context (several can run in parallel) | don't invoke directly | `iq-qualifier` |
 | **MCP server (tool)** | Real executable **tools** that reach external systems (APIs, databases) — code, not a prompt | just ask; Claude calls the tool | `openfda` (recalls/labels/events) |
-| **The qualification engine** | `/qualify` + three sub-agents that produce an IQ/OQ/PQ pack | run `/qualify <app>` | see `how-to-qualify.md` |
+| **Hook** | A script Claude Code runs **automatically on an event** (before/after a tool, on a prompt) — deterministic, no model turn | configure once; it fires on its own | `protect-approved-documents` |
+| **Plugin** | A **bundle** of all the blocks above, installed in **one command** | install it once | `paraqualis-skills` |
+
+Built *from* these blocks: **the qualification engine** — `/qualify` plus three sub-agents
+that produce an IQ/OQ/PQ pack. Run `/qualify <app>`; see `how-to-qualify.md`.
 
 **Tools (MCP servers)** live under `mcp-servers/`. The first is **openFDA** — it gives
 Claude tools to query FDA recalls, drug labels, and adverse-event reports directly. It's
@@ -31,10 +35,26 @@ Commands live in `commands/` (a sub-folder = a `family:` prefix). Skills live in
 `skills/`. Sub-agents live in `agents/`. `install.sh` symlinks all three into
 `~/.claude/` so they're available in **every** project on the machine.
 
+**Hooks** live under `hooks/`. The first is **`protect-approved-documents.py`** — a
+`PreToolUse` hook that refuses any edit to a file carrying the marker
+`<!-- PARAQUALIS-LOCK: approved -->`, so an approved record can't be overwritten in
+place. Hooks fire deterministically on Claude Code events (no model turn); see
+`hooks/README.md` to register one. The **plugin** bundles the hook automatically.
+
+**The plugin** (`.claude-plugin/`) wraps everything above into one installable unit.
+`plugin.json` is the manifest; `marketplace.json` is the storefront that makes it
+installable with a single command (see Quick start). `install.sh` + symlinks remain the
+*local dev* workflow; the plugin is the *distribution* path for everyone else.
+
 ## Quick start
 
-1. **Install once:** clone the repo (or download the ZIP), run `./install.sh`, restart
-   Claude Code. (Full options — SSH/HTTPS/ZIP — in `how-to-qualify.md` §1.)
+1. **Install once.** Two ways:
+   - **As a plugin (one command):** `/plugin marketplace add DeepJam/paraqualis-skills`
+     then `/plugin install paraqualis-skills@paraqualis`. (Needs the repo to be public, or
+     point the first command at a local path to test.)
+   - **From source (dev workflow):** clone the repo (or download the ZIP), run
+     `./install.sh`, restart Claude Code. (Full options — SSH/HTTPS/ZIP — in
+     `how-to-qualify.md` §1.)
 2. **Use a command:** type `/` to see them, e.g. `/eCFR:structure 21 CFR 11`.
 3. **Use a skill:** just ask — *"is our cloud LIMS a Part 11 closed or open system?"* —
    and the relevant advisor fires on its own.
@@ -68,8 +88,12 @@ Commands live in `commands/` (a sub-folder = a `family:` prefix). Skills live in
   reference files alongside it. The `description` is what makes Claude auto-invoke it.
 - **A sub-agent:** make `agents/<name>.md` with `name` + `description` (+ optional `tools`,
   `model`). Used by the qualification engine.
+- **A hook:** add a script in `hooks/` and register it in `settings.json` (or, for the
+  plugin, add an entry to `hooks/hooks.json` using `${CLAUDE_PLUGIN_ROOT}`). See
+  `hooks/README.md`.
 - Then: `./install.sh` (links new families/skills/agents), **restart** Claude Code, and
-  `python3 docs/build_catalog.py` to refresh the catalog below.
+  `python3 docs/build_catalog.py` to refresh the catalog below. *(Note: the catalog lists
+  commands/skills/agents only — hooks and the plugin aren't auto-enumerated yet.)*
 
 ## Keeping this document current
 
