@@ -1,9 +1,20 @@
-# ParaQualis GAMP & 21 CFR Part 11 Skills
+# ParaQualis Skills — life-sciences regulatory & CSV toolkit for Claude Code
 
-Claude Code slash commands for life-sciences computer-system validation (CSV),
-GAMP 5, and 21 CFR Part 11 compliance work.
+A complete Claude Code toolkit for **computer-system validation (CSV)** and
+**life-sciences regulatory work**. Covers **GAMP 5** (2nd ed., including AI/ML),
+**21 CFR Part 11**, **EU GMP Annex 11**, the **live eCFR**, and **openFDA** — and
+ships a parallel sub-agent engine (**`/qualify`**) that drafts a full
+**IQ / OQ / PQ qualification pack** for any application in minutes.
+
+Install in one command and you get 16 slash commands, 2 auto-invoked advisor
+skills, 3 specialist sub-agents, and a document-protection hook. The qualification
+engine writes its output to `<your-app>/Qualification/` in Markdown, branded Word,
+and Excel. All output is stamped **DRAFT** pending review by appropriately
+qualified and authorized personnel — the generator is itself a GxP-impacting tool
+that needs its own qualification before its output is relied upon.
 
 Copyright © 2026 ParaQualis LLC. Released under the [MIT License](LICENSE).
+See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](CHANGELOG.md) for release history.
 
 > **New here? Start with [docs/OVERVIEW.md](docs/OVERVIEW.md)** — the whole toolkit at a
 > glance, with a live catalog of every command, skill, and sub-agent (auto-generated, so
