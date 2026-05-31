@@ -8,7 +8,7 @@
     {
       "name": "paraqualis-skills",
       "source": ".",
-      "description": "GAMP 5, 21 CFR Part 11, EU GMP Annex 11, the live eCFR, openFDA, and the /qualify IQ/OQ/PQ qualification engine — slash commands, auto-invoked skills, parallel sub-agents, and a document-protection hook."
+      "description": "GAMP 5, 21 CFR Part 11, EU GMP Annex 11, the live eCFR, openFDA, and the /qualify IQ/OQ/PQ qualification engine — slash commands, auto-invoked skills, parallel sub-agents, and a document-protection hook. Includes /openfda:setup to provision a free openFDA API key in a minute."
     }
   ]
 }

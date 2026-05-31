@@ -23,9 +23,16 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("openfda")
 BASE = "https://api.fda.gov"
 
+# Surface the /openfda:setup nudge once per server-process lifetime when there's no key.
+# We do this in two places: (1) on a 429 rate-limit error, because that's the moment the
+# user actually feels the absent key bite; (2) on the FIRST successful no-key response, as
+# a single tip so they know personal-key territory exists before they hit the wall.
+_HINTED_NO_KEY = False
+
 
 def _query(endpoint: str, search: str, limit: int) -> dict:
     """Call an openFDA endpoint; return {'total', 'results'} or {'error'} / no-match note."""
+    global _HINTED_NO_KEY
     limit = max(1, min(int(limit), 50))
     params = {"search": search, "limit": limit}
     key = os.environ.get("OPENFDA_API_KEY")
@@ -38,12 +45,30 @@ def _query(endpoint: str, search: str, limit: int) -> dict:
     except urllib.error.HTTPError as e:
         if e.code == 404:
             return {"total": 0, "results": [], "note": "No matching records."}
+        if e.code == 429:
+            # Rate-limited. The advice differs depending on whether they're on the shared
+            # tier or have already burned through a personal-key quota.
+            if not key:
+                msg = ("openFDA rate limit hit — you are on the shared (no-key) tier "
+                       "(~1,000 requests/day). Run /openfda:setup to get a free personal "
+                       "API key in under a minute (raises the limit to ~120,000/day).")
+            else:
+                msg = ("openFDA rate limit hit — your personal key has reached its "
+                       "daily quota. It resets at midnight UTC.")
+            return {"error": msg, "rate_limit": True}
         return {"error": f"openFDA HTTP {e.code}",
                 "detail": e.read().decode("utf-8", "replace")[:300]}
     except Exception as e:                       # network/timeout/parse
         return {"error": str(e)}
-    return {"total": (data.get("meta", {}).get("results", {}) or {}).get("total"),
-            "results": data.get("results", [])}
+    result = {"total": (data.get("meta", {}).get("results", {}) or {}).get("total"),
+              "results": data.get("results", [])}
+    # First successful call this session without a key → drop a single non-intrusive tip.
+    if not key and not _HINTED_NO_KEY:
+        _HINTED_NO_KEY = True
+        result["tip"] = ("No OPENFDA_API_KEY set — using shared limits (~1,000/day). "
+                         "Run /openfda:setup to get a free personal key "
+                         "(raises to ~120,000/day). Shown once per session.")
+    return result
 
 
 def _pick(d: dict, keys) -> dict:

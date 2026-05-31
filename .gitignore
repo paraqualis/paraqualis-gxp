@@ -14,3 +14,6 @@
 # Python build artifacts
 __pycache__/
 *.pyc
+
+# LibreOffice lock files (created when a .docx is open)
+.~lock.*#
