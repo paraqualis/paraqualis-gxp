@@ -10,7 +10,7 @@ the document-protection hook, leak credentials, or compromise a host running
 the openFDA MCP server — please report it **privately** rather than opening a
 public issue.
 
-**Contact:** `security@paraqualis.com` (subject line: "paraqualis-skills security")
+**Contact:** `craig@paraqualis.com` (subject line: "paraqualis-skills security")
 
 We aim to:
 - Acknowledge your report within **5 working days**.
