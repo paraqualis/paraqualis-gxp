@@ -4,10 +4,10 @@
   "description": "Life-sciences regulatory & computer-system-validation toolkit for Claude Code — GAMP 5, 21 CFR Part 11, EU GMP Annex 11, the live eCFR, openFDA, and an IQ/OQ/PQ qualification engine (/qualify). Commands, skills, sub-agents, and a document-protection hook. Run /openfda:setup once to provision a free personal openFDA API key (one minute, raises rate limits ~1,000 → ~120,000 requests/day).",
   "author": {
     "name": "ParaQualis LLC",
-    "url": "https://github.com/DeepJam/paraqualis-skills"
+    "url": "https://github.com/paraqualis/paraqualis-skills"
   },
-  "homepage": "https://github.com/DeepJam/paraqualis-skills",
-  "repository": "https://github.com/DeepJam/paraqualis-skills",
+  "homepage": "https://github.com/paraqualis/paraqualis-skills",
+  "repository": "https://github.com/paraqualis/paraqualis-skills",
   "license": "MIT",
   "keywords": [
     "gamp", "gamp5", "21-cfr-part-11", "annex-11", "csv",

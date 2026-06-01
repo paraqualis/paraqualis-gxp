@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/) and the
 ## [1.0.0] — 2026-05-31
 
 First public release. The toolkit is packaged as a Claude Code plugin and is
-installable via the bundled marketplace (`/plugin marketplace add DeepJam/paraqualis-skills`
+installable via the bundled marketplace (`/plugin marketplace add paraqualis/paraqualis-skills`
 then `/plugin install paraqualis-skills@paraqualis`).
 
 ### Added — slash commands (16, across 5 families)
@@ -72,4 +72,4 @@ All three are delegated by `/qualify`, run in parallel in isolated contexts, and
 
 The toolkit holds to: **plain English always**; **no stack assumptions** (the qualifier discovers languages, runtimes, and databases — zero, one, or many — rather than assuming them); **expected values are sourced** from the spec or the system's own declarations, not invented; **honest evidence** (a skipped test is not a pass; errors are never swallowed silently); **markdown is the source of truth** — Word and Excel are generated, never hand-edited.
 
-[1.0.0]: https://github.com/DeepJam/paraqualis-skills/releases/tag/v1.0.0
+[1.0.0]: https://github.com/paraqualis/paraqualis-skills/releases/tag/v1.0.0

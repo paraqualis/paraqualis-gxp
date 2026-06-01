@@ -49,7 +49,7 @@ installable with a single command (see Quick start). `install.sh` + symlinks rem
 ## Quick start
 
 1. **Install once.** Two ways:
-   - **As a plugin (one command):** `/plugin marketplace add DeepJam/paraqualis-skills`
+   - **As a plugin (one command):** `/plugin marketplace add paraqualis/paraqualis-skills`
      then `/plugin install paraqualis-skills@paraqualis`. (Needs the repo to be public, or
      point the first command at a local path to test.)
    - **From source (dev workflow):** clone the repo (or download the ZIP), run

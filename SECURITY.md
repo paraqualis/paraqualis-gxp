@@ -47,7 +47,7 @@ reports that depend on already-public credentials.
 ## Supply-chain notes for regulated installers
 
 paraqualis-skills is distributed via Git with tagged releases on
-[GitHub](https://github.com/DeepJam/paraqualis-skills). Regulated installers
+[GitHub](https://github.com/paraqualis/paraqualis-skills). Regulated installers
 should:
 
 - **Pin to a tag** (e.g. `v1.0.0`) rather than tracking `main`, so the installed
