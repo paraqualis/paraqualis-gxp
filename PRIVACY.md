@@ -85,5 +85,5 @@ the repository's Git log.
 ## Contact
 
 ParaQualis LLC — Connecticut, United States.
-Privacy and security inquiries: `craig.w.wylie@gmail.com`
-(subject line: "paraqualis-skills privacy").
+Privacy inquiries: `privacy@paraqualis.com` (subject line: "paraqualis-skills privacy").
+For security issues, see [SECURITY.md](SECURITY.md) — `security@paraqualis.com`.
