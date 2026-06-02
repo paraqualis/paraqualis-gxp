@@ -1,0 +1,112 @@
+# Daily check: has paraqualis-skills appeared in Anthropic's community marketplace yet?
+# Opens a GitHub issue the FIRST time it's detected, then stays quiet on subsequent runs.
+# State is persisted in stats/community-marketplace-status.json so we never spam.
+
+name: Community marketplace tracker
+
+on:
+  schedule:
+    - cron: '0 9 * * *'      # daily at 09:00 UTC
+  workflow_dispatch:          # also runnable manually from the Actions tab
+
+permissions:
+  contents: write              # to commit the updated status file
+  issues: write                # to open the "we're in!" milestone issue
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the community catalog for paraqualis-skills
+        id: check
+        run: |
+          mkdir -p stats
+          status_file="stats/community-marketplace-status.json"
+
+          curl -sSL \
+            https://raw.githubusercontent.com/anthropics/claude-plugins-community/main/.claude-plugin/marketplace.json \
+            -o /tmp/community.json
+
+          # Was it already detected on a previous run?
+          prior_found=false
+          if [ -f "$status_file" ]; then
+            prior_found=$(python3 -c "import json; print(json.load(open('$status_file')).get('found', False))")
+          fi
+
+          python3 - "$prior_found" <<'PY' > /tmp/found.txt
+          import json, sys, datetime
+          prior_found = sys.argv[1] == "True"
+          with open('/tmp/community.json') as f:
+              cat = json.load(f)
+          plugins = cat.get('plugins', [])
+          match = [p for p in plugins if p.get('name') == 'paraqualis-skills']
+          status = {
+              'last_checked_at': datetime.datetime.now(datetime.UTC).isoformat().replace('+00:00','Z'),
+              'total_plugins_in_catalog': len(plugins),
+              'found': bool(match),
+              'matched_entry': match[0] if match else None,
+          }
+          # Preserve first-detected timestamp once set, set it the first time we see it.
+          try:
+              with open('stats/community-marketplace-status.json') as f:
+                  prior = json.load(f)
+              if prior.get('first_detected_at'):
+                  status['first_detected_at'] = prior['first_detected_at']
+          except FileNotFoundError:
+              pass
+          if status['found'] and 'first_detected_at' not in status:
+              status['first_detected_at'] = status['last_checked_at']
+
+          with open('stats/community-marketplace-status.json', 'w') as f:
+              json.dump(status, f, indent=2)
+
+          # Signal to the next step whether this is a first-detection event
+          print("newly_found" if status['found'] and not prior_found else "no_change")
+          PY
+
+          echo "result=$(cat /tmp/found.txt)" >> $GITHUB_OUTPUT
+
+      - name: Commit refreshed status
+        run: |
+          if [ -n "$(git status --porcelain stats/)" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add stats/
+            git commit -m "tracker: refresh community marketplace status [skip ci]"
+            git push
+          fi
+
+      - name: Open milestone issue on first detection
+        if: steps.check.outputs.result == 'newly_found'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const status = JSON.parse(fs.readFileSync('stats/community-marketplace-status.json', 'utf8'));
+            const entry  = status.matched_entry || {};
+            const src    = entry.source || {};
+            const ref    = src.ref || src.commit || 'unknown';
+            const body = [
+              '`paraqualis-skills` has appeared in Anthropic\'s community marketplace.',
+              '',
+              `- **Pinned commit SHA:** \`${ref}\``,
+              `- **Catalog total at detection:** ${status.total_plugins_in_catalog}`,
+              `- **First detected (UTC):** ${status.first_detected_at}`,
+              '',
+              'Users can now install via:',
+              '```',
+              '/plugin marketplace add anthropics/claude-plugins-community',
+              '/plugin install paraqualis-skills@claude-community',
+              '```',
+              '',
+              '_(The community catalog syncs nightly; expect a few hours before all `/plugin` Discover tabs reflect this.)_'
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              title: '🎉 paraqualis-skills accepted into the community marketplace',
+              body:  body,
+              labels: ['milestone']
+            });

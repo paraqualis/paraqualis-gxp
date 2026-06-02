@@ -1,0 +1,79 @@
+# Daily snapshot of GitHub's 14-day Traffic data into a permanent CSV.
+# GitHub only retains Traffic data for 14 days, so this gives us a forever record
+# of clones, views, and unique visitors. No identities are recorded — counts only.
+
+name: Traffic logger
+
+on:
+  schedule:
+    - cron: '0 2 * * *'      # daily at 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch clones + views from the Traffic API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p stats
+          gh api /repos/${{ github.repository }}/traffic/clones > /tmp/clones.json
+          gh api /repos/${{ github.repository }}/traffic/views  > /tmp/views.json
+
+          python3 <<'PY'
+          import json, csv, os
+          with open('/tmp/clones.json') as f:
+              clones = json.load(f)
+          with open('/tmp/views.json') as f:
+              views = json.load(f)
+
+          # Index by ISO date (the API returns one entry per day)
+          c_by_day = {x['timestamp'][:10]: x for x in clones.get('clones', [])}
+          v_by_day = {x['timestamp'][:10]: x for x in views.get('views',  [])}
+
+          # Merge with any existing CSV — the last 14 days get overwritten with the
+          # latest API values; older rows are retained verbatim.
+          csv_path = 'stats/traffic.csv'
+          existing = {}
+          if os.path.exists(csv_path):
+              with open(csv_path) as f:
+                  for row in csv.DictReader(f):
+                      existing[row['date']] = row
+
+          all_dates = set(c_by_day) | set(v_by_day)
+          for d in all_dates:
+              c = c_by_day.get(d, {})
+              v = v_by_day.get(d, {})
+              existing[d] = {
+                  'date': d,
+                  'clones_count'  : c.get('count',   0),
+                  'clones_uniques': c.get('uniques', 0),
+                  'views_count'   : v.get('count',   0),
+                  'views_uniques' : v.get('uniques', 0),
+              }
+
+          rows = sorted(existing.values(), key=lambda r: r['date'])
+          with open(csv_path, 'w', newline='') as f:
+              w = csv.DictWriter(f, fieldnames=[
+                  'date', 'clones_count', 'clones_uniques',
+                  'views_count', 'views_uniques'])
+              w.writeheader()
+              w.writerows(rows)
+          print(f"wrote {len(rows)} rows to {csv_path}")
+          PY
+
+      - name: Commit refreshed traffic CSV
+        run: |
+          if [ -n "$(git status --porcelain stats/)" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add stats/traffic.csv
+            git commit -m "tracker: refresh traffic.csv [skip ci]"
+            git push
+          fi
