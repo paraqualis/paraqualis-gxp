@@ -13,6 +13,9 @@ permissions:
   contents: write              # to commit the updated status file
   issues: write                # to open the "we're in!" milestone issue
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # silences Node 20 deprecation warning
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -43,7 +46,7 @@ jobs:
           plugins = cat.get('plugins', [])
           match = [p for p in plugins if p.get('name') == 'paraqualis-skills']
           status = {
-              'last_checked_at': datetime.datetime.now(datetime.UTC).isoformat().replace('+00:00','Z'),
+              'last_checked_at': datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00','Z'),
               'total_plugins_in_catalog': len(plugins),
               'found': bool(match),
               'matched_entry': match[0] if match else None,

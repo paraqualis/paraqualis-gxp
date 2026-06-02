@@ -12,6 +12,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # silences Node 20 deprecation warning
+
 jobs:
   log:
     runs-on: ubuntu-latest
@@ -20,8 +23,18 @@ jobs:
 
       - name: Fetch clones + views from the Traffic API
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The default GITHUB_TOKEN cannot read the Traffic API (admin scope required),
+          # so we use a fine-grained PAT with Administration:Read on this repo, stored
+          # as the TRAFFIC_TOKEN repo secret. See stats/README.md for the setup.
+          GH_TOKEN: ${{ secrets.TRAFFIC_TOKEN }}
         run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::TRAFFIC_TOKEN repo secret is not configured."
+            echo "The Traffic API needs admin-read permission, which the default GITHUB_TOKEN cannot grant."
+            echo "Create a fine-grained PAT (Administration: Read on this repo only) and store it as TRAFFIC_TOKEN."
+            echo "Setup guide: stats/README.md."
+            exit 1
+          fi
           mkdir -p stats
           gh api /repos/${{ github.repository }}/traffic/clones > /tmp/clones.json
           gh api /repos/${{ github.repository }}/traffic/views  > /tmp/views.json
