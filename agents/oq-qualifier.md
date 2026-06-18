@@ -4,8 +4,8 @@ description: >-
   Operational Qualification (OQ) specialist. Use to examine HOW a system has been
   built — its functions, configuration logic, build pipeline, and tests — and produce
   OQ evidence that it operates per specification; or, in verify mode, pre-check OQ
-  items in an existing pack. Delegated to by /qualify, usually in parallel with
-  iq-qualifier and pq-qualifier.
+  items in an existing pack. Delegated to by /qualify:build (generate) and
+  /qualify:review (verify), usually in parallel with iq-qualifier and pq-qualifier.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

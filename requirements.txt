@@ -1,0 +1,19 @@
+# paraqualis-skills — Python dependencies (validated baseline)
+#
+# Requires Python >= 3.10.  The `mcp` SDK (openFDA MCP server) does not publish
+# distributions for Python 3.9 or earlier; python-docx and openpyxl run on 3.9+,
+# but the project as a whole targets Python 3.10+.
+#
+# Install:  pip install -r requirements.txt
+#
+# Pre-flight checks in build_docx.py, build_xlsx.py and
+# mcp-servers/openfda/server.py verify these are present (and, for the server,
+# that Python is new enough) before doing any work — nothing runs silently
+# against a missing dependency.
+
+python-docx==1.2.0
+openpyxl==3.1.5
+
+# mcp: requires Python >=3.10. Pinned to the version validated in the project
+# virtual environment (.venv, Python 3.12).
+mcp==1.28.0

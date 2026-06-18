@@ -4,8 +4,8 @@ description: >-
   Performance Qualification (PQ) specialist. Use to verify a system DOES WHAT IT IS
   SUPPOSED TO in its intended use — requirements vs. actual behaviour, end-to-end
   workflows, representative data — and produce PQ evidence; or, in verify mode,
-  pre-check PQ items in an existing pack. Delegated to by /qualify, usually in
-  parallel with iq-qualifier and oq-qualifier.
+  pre-check PQ items in an existing pack. Delegated to by /qualify:build (generate)
+  and /qualify:review (verify), usually in parallel with iq-qualifier and oq-qualifier.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

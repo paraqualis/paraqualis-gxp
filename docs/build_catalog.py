@@ -87,7 +87,7 @@ def render() -> str:
         out.append(f"| `{sk.parent.name}` | {esc(description(sk))} |")
     out.append("")
 
-    out += ["### Sub-agents (run in parallel by `/qualify`)", "",
+    out += ["### Sub-agents (run in parallel by `/qualify:build` and `/qualify:review`)", "",
             "| Sub-agent | What it does |", "|---|---|"]
     for md in sorted((ROOT / "agents").glob("*.md")):
         out.append(f"| `{md.stem}` | {esc(description(md))} |")

@@ -6,6 +6,52 @@ This project follows [Semantic Versioning](https://semver.org/) and the
 
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
+## [1.1.0] — 2026-06-17
+
+### Changed — `/qualify` split into the `qualify:` command family
+
+The single `/qualify` command conflated three distinct jobs (generate, verify, and the
+implicit requirements obligation) behind one mode-detecting entry point. It is now three
+focused commands:
+
+- **`/qualify:build`** — the generate path. Discovers the stack, database schema(s),
+  required seed data, and the approved requirements, then fans out to the IQ/OQ/PQ
+  sub-agents in parallel and assembles the pack. When no approved requirements document
+  exists it still completes IQ, OQ, and partial PQ, raises a critical finding, and offers
+  to author a draft URS inline.
+- **`/qualify:requirements`** — new. Authors a draft **User Requirements Specification
+  (URS)** to `Qualification/requirements/URS.md` when none exists — discharging the
+  regulatory obligation to define requirements (GAMP 5 lifecycle; EU Annex 11 cl.4),
+  structured so each requirement is testable and traces to a PQ test-case.
+- **`/qualify:review`** — the verify path, refocused. Reports what is complete and what is
+  outstanding, detects drift against the current system, and produces a gap-closure plan
+  split into AI-closable vs. human/witnessed.
+
+Slash-command count is now **18**. The three IQ/OQ/PQ sub-agents are unchanged (shared by
+`/qualify:build` in generate mode and `/qualify:review` in verify mode). Docs, README,
+the catalog, and the plugin/marketplace manifests updated to match.
+
+### Added — packaging, MCP bundling, logging, and a runtime version surface
+
+- **Dependency manifest** — `requirements.txt` pins `python-docx`, `openpyxl`, and `mcp`, and
+  declares Python ≥ 3.10. Pre-flight checks in `build_docx.py`, `build_xlsx.py`, and the
+  openFDA server now **fail loud** with install guidance when a dependency (or a new-enough
+  Python) is missing — nothing runs silently against a missing dependency.
+- **openFDA MCP server bundled in the plugin** — declared in `plugin.json` → `mcpServers`
+  (`${CLAUDE_PLUGIN_ROOT}`), so installing the plugin registers it.
+- **Server-side logging** — the openFDA server and the document-protection hook log failures
+  and fail-open decisions to stderr (21 CFR Part 11 §11.10(e); EU GMP Annex 11 cl.9).
+- **`server_version()` MCP tool** — returns the running plugin version + Python runtime.
+- **`docs/minimum-configuration.md`** — one page of prerequisites and how to satisfy each.
+- **Self-qualification pack** — a DRAFT IQ/OQ/PQ qualification package for the toolkit itself
+  under `Qualification/`, plus `PUBLISHING.md` (marketplace publication guide).
+
+### Fixed
+
+- `hooks/README.md` reconciled to document plugin / in-repo / manual hook registration
+  consistently (a hard-coded absolute path previously conflicted with the
+  `${CLAUDE_PLUGIN_ROOT}` form in `hooks/hooks.json`).
+
 ## [1.0.0] — 2026-05-31
 
 First public release. The toolkit is packaged as a Claude Code plugin and is

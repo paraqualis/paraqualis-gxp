@@ -17,3 +17,6 @@ __pycache__/
 
 # LibreOffice lock files (created when a .docx is open)
 .~lock.*#
+
+# Python virtual environment (project runtime, Python 3.12)
+.venv/

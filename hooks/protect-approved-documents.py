@@ -22,9 +22,18 @@ target file path, check the file on disk for the marker, and:
 A file that doesn't exist yet (a new file being created) is always allowed.
 """
 import json
+import logging
 import sys
 
 LOCK_MARKER = "<!-- PARAQUALIS-LOCK: approved -->"
+
+# Log blocks AND fail-open decisions to stderr, so the control leaves an observable
+# trail of when it acted and — importantly — when it let something through because it
+# could not check (a silent fail-open would leave no audit record). 21 CFR Part 11
+# §11.10(e); EU GMP Annex 11 cl.9.
+logging.basicConfig(stream=sys.stderr, level=logging.INFO,
+                    format="%(asctime)s protect-approved-documents %(levelname)s %(message)s")
+log = logging.getLogger("protect-approved-documents")
 
 
 def main() -> int:
@@ -32,7 +41,8 @@ def main() -> int:
     # rather than wedge the whole session on a malformed payload.
     try:
         event = json.load(sys.stdin)
-    except Exception:
+    except Exception as e:
+        log.warning("fail-open: could not parse hook event JSON (%s) — allowing", e)
         return 0
 
     tool_input = event.get("tool_input", {}) or {}
@@ -45,10 +55,12 @@ def main() -> int:
             content = f.read()
     except FileNotFoundError:
         return 0  # creating a brand-new file — allow
-    except Exception:
+    except Exception as e:
+        log.warning("fail-open: could not read %s (%s) — allowing", path, e)
         return 0  # can't read it — fail open
 
     if LOCK_MARKER in content:
+        log.info("blocked edit to approved/locked document: %s", path)
         sys.stderr.write(
             f"Blocked: {path} is an APPROVED, locked document (it contains the marker "
             f"'{LOCK_MARKER}'). Approved records must not be edited in place. To revise "

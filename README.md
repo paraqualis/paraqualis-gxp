@@ -3,10 +3,11 @@
 A complete Claude Code toolkit for **computer-system validation (CSV)** and
 **life-sciences regulatory work**. Covers **GAMP 5** (2nd ed., including AI/ML),
 **21 CFR Part 11**, **EU GMP Annex 11**, the **live eCFR**, and **openFDA** — and
-ships a parallel sub-agent engine (**`/qualify`**) that drafts a full
-**IQ / OQ / PQ qualification pack** for any application in minutes.
+ships a parallel sub-agent engine (**`/qualify:build`**, **`/qualify:requirements`**,
+**`/qualify:review`**) that drafts a full **IQ / OQ / PQ qualification pack** for any
+application in minutes.
 
-Install in one command and you get 16 slash commands, 2 auto-invoked advisor
+Install in one command and you get 18 slash commands, 2 auto-invoked advisor
 skills, 3 specialist sub-agents, and a document-protection hook. The qualification
 engine writes its output to `<your-app>/Qualification/` in Markdown, branded Word,
 and Excel. All output is stamped **DRAFT** pending review by appropriately
@@ -18,7 +19,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](C
 
 > **New here? Start with [docs/OVERVIEW.md](docs/OVERVIEW.md)** — the whole toolkit at a
 > glance, with a live catalog of every command, skill, and sub-agent (auto-generated, so
-> it never drifts). Then [docs/how-to-qualify.md](docs/how-to-qualify.md) for the `/qualify` engine.
+> it never drifts). Then [docs/how-to-qualify.md](docs/how-to-qualify.md) for the `/qualify:*` engine.
 
 ## What's here
 
@@ -41,7 +42,9 @@ the folder name becomes the command's namespace prefix (`/family:command`).
 | `/eu-annex11:checklist` | Generate a tailored Annex 11 controls checklist for validation or inspection readiness. |
 | `/eu-annex11:auditprep` | Prepare for an EU GMP inspection against Annex 11 — likely questions, evidence, weak points. |
 | `/eu-annex11:crosswalk` | Map Annex 11 against 21 CFR Part 11 — alignment, divergence, and what satisfies both. |
-| `/qualify` | Build (or verify) an IQ/OQ/PQ qualification package for a system by fanning out to the xQ subagents **in parallel**. |
+| `/qualify:build` | Build a draft IQ/OQ/PQ qualification pack — discover the stack, schema(s), seed data, and approved requirements, then fan out to the xQ subagents **in parallel**. |
+| `/qualify:requirements` | Author a draft User Requirements Specification (URS) when none exists — discharging the regulatory obligation to define requirements, structured so each one is testable and feeds PQ traceability. |
+| `/qualify:review` | Review an existing pack — report what's complete, where gaps remain, detect drift against the current system, and plan closure of the gaps an AI can close. |
 | `/openfda:setup` | Detect an openFDA API key; if missing, walk the user through getting a free one (instant) and saving it to a shell file of their choice. |
 
 The `eCFR:` family pulls live from the public [eCFR API](https://www.ecfr.gov/developers/documentation/api/v1)
@@ -68,7 +71,7 @@ their description — no slash command to type. Each is a folder with a `SKILL.m
 
 Subagents live under `agents/` and are specialized sub-Claudes the main agent
 delegates to, **each in its own isolated context**. That isolation lets several run
-**in parallel**. The `/qualify` command orchestrates these three concurrently:
+**in parallel**. `/qualify:build` (generate) and `/qualify:review` (verify) orchestrate these three concurrently:
 
 | Subagent | Stage | Examines |
 |---|---|---|
@@ -76,8 +79,8 @@ delegates to, **each in its own isolated context**. That isolation lets several 
 | `oq-qualifier` | Operational Qualification | how it's built — functions, config logic, tests, pipeline |
 | `pq-qualifier` | Performance Qualification | does it do its job — intended use, requirements ↔ behaviour |
 
-They produce **draft, traceable evidence** (generate mode) or **pre-check an existing
-pack** (verify mode); `/qualify` assembles the consolidated package. All output is
+They produce **draft, traceable evidence** (`/qualify:build`) or **pre-check an existing
+pack** (`/qualify:review`); each command assembles the consolidated package. All output is
 stamped draft pending review by appropriately qualified and authorized personnel — the generator itself is a GxP-impacting
 tool that would require its own qualification before its output is relied upon.
 
@@ -121,9 +124,27 @@ plugin is the **distribution** path. The openFDA MCP server is *not* auto-bundle
 
 ## Using the qualification engine
 
+The engine is **three commands** in the `qualify:` family — start at whichever fits:
+
+- **`/qualify:build <app>`** — generate the IQ/OQ/PQ pack. IQ and OQ never wait on a
+  requirements doc; only **PQ** traces to one. The command **searches for the spec and asks
+  you to point to it** (it can have any name, sit in a subfolder, or live outside the repo)
+  before treating it as missing. If there genuinely is none, it still completes IQ, OQ, and
+  partial PQ, raises a critical finding, and **offers to author a draft URS inline**.
+- **`/qualify:requirements <app>`** — author a draft **URS** when none exists (a regulatory
+  obligation under GAMP 5 / EU Annex 11 cl.4). It first confirms one doesn't already exist —
+  offering to *supplement* rather than duplicate — then writes to
+  `<app>/Qualification/requirements/URS.md` for review and approval.
+- **`/qualify:review <app>`** — report what's complete, what's outstanding, and drift
+  against the current system, then plan gap-closure (AI-closable vs. human/witnessed). If
+  the pack **or** the requirements are missing it prompts you and — on your go-ahead — can
+  kick off the other two commands to establish them first.
+
+Hand-offs always happen **on your go-ahead, never silently.**
+
 **Full usage guide: [docs/how-to-qualify.md](docs/how-to-qualify.md)** (also available as a
 Word document, authored by ParaQualis LLC) — how to qualify any application, what to tell
-Claude, how to trigger `/qualify`, what to expect, every output in the `Qualification/`
+Claude, how to trigger the `/qualify:*` commands, what to expect, every output in the `Qualification/`
 directory, and the gap-closure loop.
 
 ## Install from source (dev workflow)
@@ -169,7 +190,10 @@ it re-scans the commands and skills folders.
 │   │   └── crosswalk.md
 │   ├── openfda/
 │   │   └── setup.md        # get/configure a free openFDA API key
-│   └── qualify.md          # orchestrator: fans out to the xQ subagents
+│   └── qualify/            # the qualification engine (split into three commands)
+│       ├── build.md        # generate: fans out to the xQ subagents in parallel
+│       ├── requirements.md # author a draft URS when none exists
+│       └── review.md       # verify: status report + gap-closure plan
 ├── agents/                 # subagents the main agent delegates to (run in parallel)
 │   ├── iq-qualifier.md
 │   ├── oq-qualifier.md
@@ -193,7 +217,7 @@ it re-scans the commands and skills folders.
 │   └── marketplace.json  # single-plugin storefront
 ├── mcp-servers/openfda/  # openFDA MCP server (opt-in; needs `pip install mcp`)
 ├── docs/
-│   └── xq-qualification-protocol.md   # the test-case + pack abstraction for /qualify
+│   └── xq-qualification-protocol.md   # the test-case + pack abstraction for /qualify:*
 ├── install.sh        # symlinks commands + skills + agents into ~/.claude/
 ├── LICENSE           # MIT
 └── README.md
