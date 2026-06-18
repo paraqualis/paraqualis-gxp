@@ -21,6 +21,16 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](C
 > glance, with a live catalog of every command, skill, and sub-agent (auto-generated, so
 > it never drifts). Then [docs/how-to-qualify.md](docs/how-to-qualify.md) for the `/qualify:*` engine.
 
+## Install
+
+```
+/plugin marketplace add paraqualis/paraqualis-skills
+/plugin install paraqualis-skills@paraqualis
+```
+
+The openFDA MCP server is bundled and needs **Python ≥ 3.10** with `pip install -r requirements.txt`
+(everything else works without it). See [docs/minimum-configuration.md](docs/minimum-configuration.md).
+
 ## What's here
 
 Commands are grouped into families. Each family is a folder under `commands/`;
@@ -118,9 +128,10 @@ The whole toolkit is packaged as a **Claude Code plugin** — the manifest lives
 
 (The GitHub path requires the repo to be public; to test locally, point the first command
 at the repo folder instead.) `install.sh` + symlinks remain the **local dev** workflow; the
-plugin is the **distribution** path. The openFDA MCP server is *not* auto-bundled — it needs
-`pip install mcp`, so it stays the documented manual step in its
-[README](mcp-servers/openfda/README.md).
+plugin is the **distribution** path. The openFDA MCP server **is** bundled in the plugin
+(`plugin.json` → `mcpServers`, so installing registers it); it requires **Python ≥ 3.10** with
+`pip install -r requirements.txt` (or `pip install mcp`). See its
+[README](mcp-servers/openfda/README.md) and [docs/minimum-configuration.md](docs/minimum-configuration.md).
 
 ## Using the qualification engine
 
