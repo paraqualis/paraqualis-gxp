@@ -1,4 +1,4 @@
-# Installation Qualification (IQ) — paraqualis-skills v1.1.0
+# Installation Qualification (IQ) — paraqualis-skills v1.2.0
 
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 
@@ -20,7 +20,7 @@ by inspection — a valid finding, not a skip).
 
 | Component | Expected / Spec | Found (evidence) | Status |
 |---|---|---|---|
-| **Plugin manifest** (`plugin.json`) | `name`, `version`, `description`, `author` present; valid JSON | All four present; `version = "1.1.0"`; valid JSON (`.claude-plugin/plugin.json:1-17`) | Verified |
+| **Plugin manifest** (`plugin.json`) | `name`, `version`, `description`, `author` present; valid JSON | All four present; `version = "1.2.0"`; valid JSON (`.claude-plugin/plugin.json:1-17`) | Verified |
 | **Marketplace manifest** (`marketplace.json`) | Valid JSON; plugin entry referencing GitHub source | Present and valid (`.claude-plugin/marketplace.json:1-18`) | Verified |
 | **Command families** (6) | cfr21-11(3), eCFR(5), eu-annex11(4), gamp(2), openfda(1), qualify(3) = 18 `.md`, each with valid frontmatter + `description` | 18 files across 6 families confirmed | Verified |
 | **Sub-agents** (3) | `agents/{iq,oq,pq}-qualifier.md` with `name`/`description`/`tools`/`model` | All present, fields confirmed (`agents/*.md:1-10`) | Verified |
@@ -38,7 +38,7 @@ by inspection — a valid finding, not a skip).
 | **Dependency manifest** | requirements.txt / pyproject / lockfile | `requirements.txt` present; all three pinned (`==`) | Verified (GIQ-001 closed) |
 | **Config `.env.example`** | Template present; `OPENFDA_API_KEY` documented | Present (`.env.example`); key optional | Verified |
 | **CI workflows** | community-marketplace-tracker; traffic-logger | Both present (`.github/workflows/`) | Verified (TRAFFIC_TOKEN not statically checkable) |
-| **Runtime version surface** | Deployed version queryable at runtime | `server_version()` MCP tool → 1.1.0 / py 3.12.13 | Verified (GIQ-006 closed) |
+| **Runtime version surface** | Deployed version queryable at runtime | `server_version()` MCP tool → 1.2.0 / py 3.12.13 | Verified (GIQ-006 closed) |
 | **Server-side logging** | Errors surfaced to a server log, not only to caller | `logging`→stderr in `server.py` (every except) + hook (fail-open/block) | Verified (GIQ-007 closed) |
 | **Database / queue / cache** | None declared or expected | None found — confirmed absent | Confirmed absent (valid finding) |
 
@@ -73,7 +73,7 @@ Open Items), not a file-presence check.
 
 | ID | Requirement | Regulatory linkage | Test method | Test artifact | Acceptance criteria | Expected result | Execution record |
 |---|---|---|---|---|---|---|---|
-| **IQ-001** | `plugin.json` is valid JSON and declares `name`, `version`, `description`, `author` | GAMP 5 Cat.3 CM; Annex 11 cl.4 | Automated | `scripts/IQ-001-manifest-check.sh` | JSON parses; all four fields present/non-empty; `version` matches declared | PASS: all fields, `version = 1.1.0` | Actual:·By:·Date:·P/F:·Ref: |
+| **IQ-001** | `plugin.json` is valid JSON and declares `name`, `version`, `description`, `author` | GAMP 5 Cat.3 CM; Annex 11 cl.4 | Automated | `scripts/IQ-001-manifest-check.sh` | JSON parses; all four fields present/non-empty; `version` matches declared | PASS: all fields, `version = 1.2.0` | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-002** | All 18 slash commands exist with valid YAML frontmatter + non-empty `description` | GAMP 5 Cat.3; Annex 11 cl.4 | Automated | `scripts/IQ-002-command-structure.sh` | 18 files; each begins `---`; each has non-empty `description:` | PASS: 18 files valid | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-003** | Python deps pinned to explicit versions in a checked-in manifest | Part 11 §11.10(k); GAMP 5; Annex 11 cl.4 | Automated | `scripts/IQ-003-dependency-pins.sh` | A manifest lists `mcp`,`python-docx`,`openpyxl` pinned with `==` | PASS — `requirements.txt` pins all three | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-004** | Python runtime ≥ declared minimum | GAMP 5 infra; Annex 11 cl.3 | Automated | `scripts/IQ-004-python-version.sh` | `python3 --version` ≥ declared minimum | PASS under `.venv` (3.12 ≥ declared 3.10) | Actual:·By:·Date:·P/F:·Ref: |
@@ -85,7 +85,7 @@ Open Items), not a file-presence check.
 | **IQ-010** | Both skills have `SKILL.md` (name+description) and non-empty `reference/` corpora | GAMP 5 Cat.3; Annex 11 cl.4 | Automated | `scripts/IQ-010-skills-reference.sh` | 2 SKILL.md valid; 3 reference files non-empty | PASS | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-AI-011** | The 3 sub-agent files present with complete frontmatter (name/description/tools/model) | ISPE GAMP AI; EU Annex 22 cl.4 | Automated | `scripts/IQ-010-skills-reference.sh` | 3 agent files; each has description/tools/model | PASS | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-012** | git pre-commit hook executable; `core.hooksPath = .githooks` | GAMP 5 CM; Annex 11 cl.4 | Automated | `scripts/IQ-012-githook.sh` | hook executable; hooksPath = `.githooks` | PASS | Actual:·By:·Date:·P/F:·Ref: |
-| **IQ-AI-013** | Declared version (`1.1.0`) surfaced at runtime so deployed version is verifiable | Part 11 §11.10(k); GAMP 5 change control; ISPE GAMP AI | Automated + Manual | `scripts/IQ-001-manifest-check.sh` + manual | `plugin.json` version matches a runtime-queryable value | PASS — `server_version()` → 1.1.0 / 3.12.13 | Actual:·By:·Date:·P/F:·Ref: |
+| **IQ-AI-013** | Declared version (`1.2.0`) surfaced at runtime so deployed version is verifiable | Part 11 §11.10(k); GAMP 5 change control; ISPE GAMP AI | Automated + Manual | `scripts/IQ-001-manifest-check.sh` + manual | `plugin.json` version matches a runtime-queryable value | PASS — `server_version()` → 1.2.0 / 3.12.13 | Actual:·By:·Date:·P/F:·Ref: |
 | **IQ-014** | No database, queue, or cache present (confirmed absence, not assumption) | GAMP 5 infra scoping; Annex 11 cl.4 | Automated | `scripts/IQ-014-no-db.sh` | No SQL/migration/ORM/DB-client/broker artifacts | PASS — confirmed absent | Actual:·By:·Date:·P/F:·Ref: |
 
 *Test scripts are shipped in `Qualification/scripts/`. Each captures the ACTUAL from the
@@ -134,4 +134,5 @@ appropriately qualified and authorized personnel before use as GxP qualification
 | 0.2 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Added version-history section. Install evidence updated: dependency manifest added and pre-flight checks introduced (see Gap-Analysis GIQ-001/002/003). |
 | 0.4 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Python 3.12 + `.venv` with `mcp==1.28.0`; GIQ-001/002/003 closed; IQ-003/004/005/006 now PASS under the venv runtime. |
 | 0.5 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | GIQ-004/006/007 closed and GIQ-005 closed for plugin installs; IQ-007 & IQ-AI-013 now PASS. Only residual: in-repo dev hook opt-in (IQ-009). |
-| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.1.0 (release bump; remediated build). |
+| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.2.0 (release bump; remediated build). |
+| 0.7 (DRAFT) | 2026-06-18 | ParaQualis qualification engine | Plugin id renamed paraqualis-skills → paraqualis-gxp; version 1.1.0 → 1.2.0 (no functional change). |

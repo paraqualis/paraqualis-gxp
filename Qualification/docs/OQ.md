@@ -1,6 +1,6 @@
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 
-# OQ Section — paraqualis-skills v1.1.0
+# OQ Section — paraqualis-skills v1.2.0
 
 DRAFT — pending review and approval by appropriately qualified and authorized personnel.
 
@@ -1618,4 +1618,5 @@ $all_pass && exit 0 || exit 1
 | 0.2 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Added version-history section. |
 | 0.3 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Removed GOQ-004; automated unit-test suite scoped out as not required at this system size (GAMP 5 proportionality); OQ-030 recorded N/A. |
 | 0.5 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | GIQ-007 logging added; OQ-031 (hook fail-open log) and OQ-032 (server network log) re-run **PASS**. |
-| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.1.0 (release bump; remediated build). |
+| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.2.0 (release bump; remediated build). |
+| 0.7 (DRAFT) | 2026-06-18 | ParaQualis qualification engine | Plugin id renamed paraqualis-skills → paraqualis-gxp; version 1.1.0 → 1.2.0 (no functional change). |

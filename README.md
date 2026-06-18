@@ -25,7 +25,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](C
 
 ```
 /plugin marketplace add paraqualis/paraqualis-skills
-/plugin install paraqualis-skills@paraqualis
+/plugin install paraqualis-gxp@paraqualis
 ```
 
 The openFDA MCP server is bundled and needs **Python ≥ 3.10** with `pip install -r requirements.txt`
@@ -123,7 +123,7 @@ The whole toolkit is packaged as a **Claude Code plugin** — the manifest lives
 
 ```
 /plugin marketplace add paraqualis/paraqualis-skills
-/plugin install paraqualis-skills@paraqualis
+/plugin install paraqualis-gxp@paraqualis
 ```
 
 (The GitHub path requires the repo to be public; to test locally, point the first command

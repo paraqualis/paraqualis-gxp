@@ -417,7 +417,7 @@ Users can install your plugin by:
    third-party listing needed:
    ```
    /plugin marketplace add <owner>/paraqualis-skills
-   /plugin install paraqualis-skills@paraqualis
+   /plugin install paraqualis-gxp@paraqualis
    ```
 2. **An official / community marketplace listing.** Any curated submission process is
    evolving — **verify the current method in the official docs before relying on a specific
@@ -456,12 +456,12 @@ git push origin v1.0.0
 
 **Install the plugin:**
 ```
-/plugin install paraqualis-skills@paraqualis-plugins
+/plugin install paraqualis-gxp@paraqualis-plugins
 ```
 
 Or install directly from GitHub:
 ```
-/plugin install paraqualis-skills@anthropics/claude-plugins-community
+/plugin install paraqualis-gxp@anthropics/claude-plugins-community
 ```
 (if approved for official community marketplace)
 

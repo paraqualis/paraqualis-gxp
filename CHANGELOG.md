@@ -6,6 +6,16 @@ This project follows [Semantic Versioning](https://semver.org/) and the
 
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
+## [1.2.0] — 2026-06-18
+
+### Changed
+
+- **Plugin renamed** — the installable plugin id is now **`paraqualis-gxp`** (was
+  `paraqualis-skills`), reflecting the toolkit's full GxP/CSV scope rather than just Part 11.
+  Install with `/plugin install paraqualis-gxp@paraqualis`. The GitHub repository and the
+  `paraqualis` marketplace are unchanged.
+- `server_version()` now reads the plugin name and version from `plugin.json` (single source of truth).
+
 ## [1.1.0] — 2026-06-17
 
 ### Changed — `/qualify` split into the `qualify:` command family
@@ -56,7 +66,7 @@ the catalog, and the plugin/marketplace manifests updated to match.
 
 First public release. The toolkit is packaged as a Claude Code plugin and is
 installable via the bundled marketplace (`/plugin marketplace add paraqualis/paraqualis-skills`
-then `/plugin install paraqualis-skills@paraqualis`).
+then `/plugin install paraqualis-gxp@paraqualis`).
 
 ### Added — slash commands (16, across 5 families)
 

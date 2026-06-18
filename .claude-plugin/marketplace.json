@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "paraqualis-skills",
+      "name": "paraqualis-gxp",
       "source": {
         "source": "github",
         "repo": "paraqualis/paraqualis-skills"
