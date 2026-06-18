@@ -13,15 +13,44 @@ rate limit (~1,000 → ~120,000 requests/day); every tool works without a key. S
 with the /openfda:setup command.
 """
 import json
+import logging
 import os
+import sys
 import urllib.parse
 import urllib.request
 import urllib.error
 
-from mcp.server.fastmcp import FastMCP
+# Pre-flight: this server needs Python >= 3.10 (the `mcp` SDK does not support
+# 3.9) and the `mcp` package itself. Check both up front and fail loud with
+# guidance, rather than dying on an opaque ImportError or a syntax error raised
+# by a newer dependency on an old interpreter.
+_MIN_PY = (3, 10)
+if sys.version_info < _MIN_PY:
+    sys.exit(
+        f"openfda MCP server requires Python >= {_MIN_PY[0]}.{_MIN_PY[1]}; "
+        f"this interpreter is {sys.version.split()[0]}. "
+        "Upgrade Python, then install dependencies:  pip install -r requirements.txt"
+    )
+try:
+    from mcp.server.fastmcp import FastMCP
+except ImportError:
+    sys.exit(
+        "openfda MCP server requires the 'mcp' package (Python >=3.10). "
+        "Install it:  pip install -r requirements.txt  (or: pip install mcp)"
+    )
 
 mcp = FastMCP("openfda")
 BASE = "https://api.fda.gov"
+
+# Server-side logging → stderr (NEVER stdout; stdout is the MCP stdio protocol channel).
+# Gives failures an observable trail independent of what is returned to the caller
+# (21 CFR Part 11 §11.10(e); EU GMP Annex 11 cl.9). Level via OPENFDA_LOG_LEVEL.
+logging.basicConfig(
+    stream=sys.stderr,
+    level=getattr(logging, os.environ.get("OPENFDA_LOG_LEVEL", "WARNING").upper(), logging.WARNING),
+    format="%(asctime)s openfda %(levelname)s %(message)s",
+)
+log = logging.getLogger("openfda")
 
 # Surface the /openfda:setup nudge once per server-process lifetime when there's no key.
 # We do this in two places: (1) on a 429 rate-limit error, because that's the moment the
@@ -48,6 +77,7 @@ def _query(endpoint: str, search: str, limit: int) -> dict:
         if e.code == 429:
             # Rate-limited. The advice differs depending on whether they're on the shared
             # tier or have already burned through a personal-key quota.
+            log.warning("openFDA 429 rate limit on %s (personal key set: %s)", endpoint, bool(key))
             if not key:
                 msg = ("openFDA rate limit hit — you are on the shared (no-key) tier "
                        "(~1,000 requests/day). Run /openfda:setup to get a free personal "
@@ -56,9 +86,11 @@ def _query(endpoint: str, search: str, limit: int) -> dict:
                 msg = ("openFDA rate limit hit — your personal key has reached its "
                        "daily quota. It resets at midnight UTC.")
             return {"error": msg, "rate_limit": True}
-        return {"error": f"openFDA HTTP {e.code}",
-                "detail": e.read().decode("utf-8", "replace")[:300]}
+        detail = e.read().decode("utf-8", "replace")[:300]
+        log.error("openFDA HTTP %s on %s: %s", e.code, endpoint, detail)
+        return {"error": f"openFDA HTTP {e.code}", "detail": detail}
     except Exception as e:                       # network/timeout/parse
+        log.exception("openFDA request failed on %s: %s", endpoint, e)
         return {"error": str(e)}
     result = {"total": (data.get("meta", {}).get("results", {}) or {}).get("total"),
               "results": data.get("results", [])}
@@ -165,6 +197,25 @@ def openfda_query(endpoint: str, search: str, limit: int = 5) -> dict:
     """
     endpoint = endpoint.strip().strip("/").removesuffix(".json")
     return _query(endpoint, search, min(int(limit), 10))
+
+
+@mcp.tool()
+def server_version() -> dict:
+    """Return the deployed paraqualis-skills version + the server's Python runtime.
+
+    Lets a caller confirm at runtime which qualified build is in use, rather than
+    trusting a static manifest (21 CFR Part 11 §11.10(k); GAMP 5 change control).
+    """
+    import platform
+    from pathlib import Path
+    version = "unknown"
+    manifest = Path(__file__).resolve().parents[2] / ".claude-plugin" / "plugin.json"
+    try:
+        version = json.loads(manifest.read_text(encoding="utf-8")).get("version", "unknown")
+    except Exception as e:
+        log.warning("could not read plugin.json version: %s", e)
+    return {"plugin": "paraqualis-skills", "version": version,
+            "python": platform.python_version()}
 
 
 if __name__ == "__main__":

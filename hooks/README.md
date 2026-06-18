@@ -29,10 +29,18 @@ revising it means a new version under change control, not an in-place overwrite.
 
 ### Register it
 
-Add this to your `settings.json`. Use **user scope** (`~/.claude/settings.json`) for
-machine-wide protection, or **project scope** (`<project>/.claude/settings.json`) to scope
-it to one project (e.g. the app whose `Qualification/` pack you want to protect). Because
-the marker is opt-in per file, user scope is safe — it only bites on files you've locked.
+**There are three ways the hook gets registered — pick the one matching how you installed:**
+
+1. **As a plugin (recommended):** nothing to do. `hooks/hooks.json` (which uses the
+   portable `${CLAUDE_PLUGIN_ROOT}` path) is **auto-discovered** when the plugin is
+   installed — the hook is active automatically.
+2. **Working inside this repo (dev/dogfood):** the repo ships a project-scoped
+   `.claude/settings.json` that registers the hook via `${CLAUDE_PROJECT_DIR}` — active for
+   any session opened in this repo.
+3. **Manual / source install elsewhere:** add the block below to your own `settings.json`
+   — **user scope** (`~/.claude/settings.json`) for machine-wide protection, or **project
+   scope** (`<project>/.claude/settings.json`) for one project. Because the marker is opt-in
+   per file, user scope is safe — it only bites on files you've locked.
 
 ```json
 {
@@ -52,8 +60,12 @@ the marker is opt-in per file, user scope is safe — it only bites on files you
 }
 ```
 
-Replace the path with the absolute path to this repo (keep the quotes — the repo path
-contains spaces). **Restart Claude Code** (or run `/hooks`) so it picks up the change.
+This absolute-path form is **only** for the manual/source install (mode 3). For plugin or
+in-repo use, prefer the portable path variables instead of a hard-coded path:
+`${CLAUDE_PLUGIN_ROOT}/hooks/protect-approved-documents.py` (plugin, as in `hooks/hooks.json`)
+or `${CLAUDE_PROJECT_DIR}/hooks/protect-approved-documents.py` (project scope). Keep the
+quotes — paths may contain spaces. **Restart Claude Code** (or run `/hooks`) so it picks up
+the change.
 
 ### Design choice: fail-open vs. fail-closed
 

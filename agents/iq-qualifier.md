@@ -4,8 +4,8 @@ description: >-
   Installation Qualification (IQ) specialist. Use to examine a system's TECH STACK
   and installed/configured state and produce IQ evidence — or, in verify mode, to
   pre-check IQ items in an existing qualification pack against what's actually present.
-  Delegated to by the /qualify orchestrator, typically in parallel with oq-qualifier
-  and pq-qualifier.
+  Delegated to by /qualify:build (generate) and /qualify:review (verify), typically in
+  parallel with oq-qualifier and pq-qualifier.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

@@ -6,10 +6,20 @@ Markdown is the source of truth; this parses the tables out of docs/*.md.
     python3 build_xlsx.py   ->   docs/Qualification-Pack.xlsx
 """
 import re
+import sys
 from pathlib import Path
 
-from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+# Pre-flight: fail loud with guidance if the workbook dependency is absent.
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+except ImportError as e:
+    sys.exit(
+        f"build_xlsx.py: missing required dependency ({e.name or 'openpyxl'}). "
+        "This script needs 'openpyxl'.\n"
+        "Install the pinned dependencies first:  pip install -r requirements.txt\n"
+        "(or: pip install openpyxl)"
+    )
 
 DOCS = Path(__file__).parent / "docs"
 OUT = DOCS / "Qualification-Pack.xlsx"

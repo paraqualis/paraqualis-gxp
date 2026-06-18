@@ -33,7 +33,7 @@ cd paraqualis-skills
 This symlinks the commands, skills, and sub-agents into `~/.claude/`. Re-run it any time
 you pull updates or add a new command family / skill / agent.
 
-**Step 3 — restart Claude Code** so it registers them. Confirm with `/` → `/qualify` appears.
+**Step 3 — restart Claude Code** so it registers them. Confirm with `/` → `/qualify:build` appears.
 
 **Optional — Word/Excel output:** `pip install python-docx openpyxl`. Markdown and the test
 scripts work without them.
@@ -45,7 +45,7 @@ language, runtime, databases (zero, one, or many — of any type), and services 
 
 ## 2. What to tell the Claude helping you with the application
 
-Run `/qualify` from a Claude Code session that can see the application. To get grounded,
+Run `/qualify:build` from a Claude Code session that can see the application. To get grounded,
 auditable output, give Claude this context first (the more it knows, the less it has to
 assume — and qualification tests are *sourced from the specification*, never invented):
 
@@ -53,10 +53,14 @@ assume — and qualification tests are *sourced from the specification*, never i
 - **Intended use & GxP context** — what the system is for and why it matters.
 - **Regulatory scope** — which apply: 21 CFR Part 11, EU GMP Annex 11, GAMP 5, AI/ML
   guidance (FDA / ISPE GAMP AI / EU Annex 22).
-- **Where the specification lives** — URS, functional/design specs, configuration
-  baselines. Expected values (versions, schema, thresholds) are read from the spec or the
-  system's own declarations (Dockerfile, lockfiles, migrations) — so point Claude at them.
-- **Any existing qualification pack** to verify against (enables *verify mode*, below).
+- **Where the requirements/specification lives** — the URS (or whatever it's called) that
+  **PQ** traces against. It can have **any name** (URS, FRS, SRS, "Functional Spec"), sit
+  in a **subfolder**, or live **outside the repo** (a shared drive, SharePoint/Confluence,
+  a Word/PDF, a link). You don't have to pre-locate it: the commands **search the obvious
+  places and then ask you to confirm or point to it** — they never assume it's missing
+  without checking with you first. Expected values (versions, schema, thresholds) are read
+  from the spec or the system's own declarations (Dockerfile, lockfiles, migrations).
+- **Any existing qualification pack** to review (that's what `/qualify:review` works on).
 
 You do **not** need to list the tech stack or databases — the engine detects them. Telling
 it anyway does no harm.
@@ -65,23 +69,44 @@ it anyway does no harm.
 
 ## 3. How to trigger it
 
-**Generate a new pack:**
-```
-/qualify <path-to-the-application>
-```
+The qualification engine is **three commands** in the `qualify:` family — build a pack,
+author the requirements it traces against, and review an existing pack.
 
-**Verify an existing pack** (pre-checks the items it can substantiate, leaves the rest for
-human sign-off):
+**Build a new pack** (the generate path — discovers the stack, schema(s), seed data, and
+the approved requirements, then fans out to the three sub-agents in parallel):
 ```
-/qualify <path-to-the-application>   (then reference the existing qualification pack)
+/qualify:build <path-to-the-application>
+```
+If no approved requirements document exists, build still completes IQ, OQ, and whatever PQ
+it can, raises a **critical finding** for the missing spec, and **offers to author a draft
+URS inline** so PQ can be completed.
+
+**Author a requirements document** (when none exists — a documented spec is a regulatory
+obligation, and the thing PQ traces against):
+```
+/qualify:requirements <path-to-the-application>
+```
+Writes a **draft URS** to `<app>/Qualification/requirements/URS.md`; review and approve it,
+then `/qualify:build` traces PQ to it.
+
+**Review an existing pack** (the verify path — reports what's complete and what's
+outstanding, detects drift against the current system, and produces a gap-closure plan
+split into AI-closable vs. human/witnessed):
+```
+/qualify:review <path-to-the-application>
 ```
 
 ---
 
 ## 4. What happens, and what to expect
 
+For **`/qualify:build`**:
+
 1. The orchestrator does a quick scan of the application to scope each stage.
-2. It **fans out to three sub-agents in parallel** — `iq-qualifier`, `oq-qualifier`,
+2. It **locates the requirements** — searches the obvious places and **asks you to confirm
+   or point to the spec** (any name, subfolder, or external source). It treats requirements
+   as missing **only after you confirm** there is none.
+3. It **fans out to three sub-agents in parallel** — `iq-qualifier`, `oq-qualifier`,
    `pq-qualifier` — each examining its slice in its own context:
    - **IQ** — is it installed/configured correctly? tech stack, **database schema(s)**,
      required seed/reference data, boot configuration.
@@ -91,7 +116,21 @@ human sign-off):
    - **PQ** — does it do its job? intended-use workflows, requirements traceability, and —
      for AI/ML systems — consistency, drift, and (for LLMs) hallucination, with defined
      acceptance outcomes.
-3. The orchestrator assembles everything into one consolidated pack.
+4. The orchestrator assembles everything into one consolidated pack.
+
+**IQ and OQ never wait on a requirements doc** — only PQ traces to it. If you confirm there
+is no approved spec, build **still completes IQ, OQ, and whatever PQ it can**, raises a
+**critical finding** (`GPQ-001` — a missing spec is a regulatory gap under GAMP 5 / EU
+Annex 11 cl.4), and **offers to author a draft URS inline** (via `/qualify:requirements`) so
+PQ can be completed. You're never blocked from getting the IQ/OQ evidence.
+
+**The three commands hand off to each other**, so you can start anywhere:
+- `/qualify:requirements` confirms a spec doesn't already exist (offering to *supplement*
+  one that does) before authoring a draft URS.
+- `/qualify:build` offers `/qualify:requirements` inline when no spec is found.
+- `/qualify:review` prompts if the pack **or** the requirements are missing, and — on your
+  go-ahead — can kick off `/qualify:requirements` then `/qualify:build` to establish what's
+  needed before it reviews. Hand-offs always happen **on your go-ahead, never silently**.
 
 **Expect a DRAFT.** The test scripts are *draft instruments* derived from examining the
 system; you then run them against the live system, and some will need adjustment against
@@ -110,6 +149,9 @@ deliverable.) It contains:
 
 ```
 Qualification/
+├── requirements/                          The spec PQ traces against (an INPUT, not
+│   └── URS.md / .docx                      evidence) — authored by /qualify:requirements
+│                                           when the system has no approved requirements doc
 ├── docs/
 │   ├── Qualification-Summary.md / .docx   Cover, readiness verdict, scorecard,
 │   │                                      regulatory traceability matrix, approvals block
@@ -117,6 +159,7 @@ Qualification/
 │   ├── OQ.md / .docx                       Operational Qualification test-cases
 │   ├── PQ.md / .docx                       Performance Qualification test-cases
 │   ├── Gap-Analysis.md / .docx             The gap register (see §6)
+│   ├── Review.md / .docx                   /qualify:review status report + gap-closure plan
 │   └── Qualification-Pack.xlsx             Workbook: Summary, IQ, OQ, PQ, Traceability,
 │                                           and Gaps — a sheet per stage
 ├── scripts/                                The executable test scripts — one file per
@@ -147,10 +190,11 @@ and it is the file you **feed to Claude in the application's repo to close the g
 gap row carries its **definition of done = the test-case that must pass**. So:
 
 ```
-/qualify <app>            → tests + Gap-Analysis.md (each gap: fix + "done = test X passes")
+/qualify:build <app>      → tests + Gap-Analysis.md (each gap: fix + "done = test X passes")
+/qualify:review <app>     → splits gaps into AI-closable vs. human/witnessed, ordered
 open Gap-Analysis.md in the app repo, hand it to Claude
 Claude fixes each gap     → re-run the linked test-case → green → gap closed
-re-run /qualify           → a cleaner pack
+re-run /qualify:review    → a cleaner pack
 ```
 
 Remediation and evidence are the same chain: a gap is closed only when the test that found

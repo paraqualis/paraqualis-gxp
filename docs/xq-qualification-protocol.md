@@ -1,6 +1,7 @@
 # xQ Qualification Protocol
 
-> The shared abstraction behind the `/qualify` command and the IQ/OQ/PQ subagents.
+> The shared abstraction behind the `/qualify:*` commands (`build` · `requirements` ·
+> `review`) and the IQ/OQ/PQ subagents.
 > Every qualification item — in any stage — is a **Requirement paired with an
 > executable Test**, and the tests are first-class deliverables in the pack.
 > (Abstraction lifted from RegCheck's validation-pack architecture, 2026-05-24.)
@@ -19,7 +20,12 @@ QA, and auditors: **clarity is a requirement, not a nicety.**
 
 - **Inputs:** (1) the **system under test**, and (2) its **approved specification** —
   what the system is *supposed* to be (intended versions, schema, configuration, use
-  cases, acceptance thresholds).
+  cases, acceptance thresholds). The requirements half of the specification (the URS that
+  PQ traces to) can live **anywhere under any name** — a subfolder, a differently-named
+  doc, or outside the repo — so the commands **search and then ask the user to point to
+  it**, never assuming it's missing without confirming. Where it genuinely doesn't exist,
+  that is a finding (GAMP 5 lifecycle; EU Annex 11 cl.4), and `/qualify:requirements`
+  authors a **draft URS** to discharge it; IQ and OQ do not depend on it.
 - **Output:** this **pack** — the protocols + the **test scripts** (generated
   instruments) + the records.
 
@@ -197,16 +203,26 @@ can be specified instead, if a detached deliverable is preferred.)
 
 ```
 Qualification/
+  requirements/                # the spec PQ traces against (an INPUT to the pack)
+    URS.md                     #   User Requirements Spec — authored by /qualify:requirements
+    URS.docx                   #   branded ParaQualis Word (generated)
   docs/                        # Markdown source-of-truth + generated renderings
     Qualification-Summary.md   #   cover · verdict · traceability matrix · open items · approvals
     IQ.md  OQ.md  PQ.md        #   test-case tables per stage
     Gap-Analysis.md            #   the gap register — QA deliverable AND agent-feedable
+    Review.md                  #   /qualify:review status report + gap-closure plan
     *.docx                     #   branded ParaQualis Word (generated)
     *-Qualification-Pack.xlsx  #   workbook: a sheet per xQ stage + Summary + Traceability
   scripts/                     # executable tests (the evidence-gathering instruments)
   records/                     # execution-record templates → filled records = evidence
   build_docx.py  build_xlsx.py # regenerate Word/Excel from the Markdown
 ```
+
+The **requirements** sub-folder holds the URS — a *sourced input* the PQ stage traces
+against, not generated evidence. Where the system has no approved requirements doc,
+`/qualify:requirements` authors a **draft** one here (a missing spec is itself a
+finding — GAMP 5 lifecycle, EU Annex 11 cl.4 — never silently assumed). It stays inside
+`Qualification/`, so the engine still writes only that one folder.
 
 **Output formats — Markdown is the source of truth; Word and Excel are *generated*
 renderings, never hand-maintained:**

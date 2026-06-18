@@ -11,11 +11,21 @@ import re
 import sys
 from pathlib import Path
 
-from docx import Document
-from docx.shared import Pt, RGBColor, Inches
-from docx.enum.section import WD_ORIENT
-from docx.oxml.ns import qn
-from docx.oxml import OxmlElement
+# Pre-flight: fail loud with guidance if the rendering dependency is absent,
+# rather than dying on an opaque ImportError mid-run.
+try:
+    from docx import Document
+    from docx.shared import Pt, RGBColor, Inches
+    from docx.enum.section import WD_ORIENT
+    from docx.oxml.ns import qn
+    from docx.oxml import OxmlElement
+except ImportError as e:
+    sys.exit(
+        f"build_docx.py: missing required dependency ({e.name or 'python-docx'}). "
+        "This script needs 'python-docx'.\n"
+        "Install the pinned dependencies first:  pip install -r requirements.txt\n"
+        "(or: pip install python-docx)"
+    )
 
 DEEP_BLUE = RGBColor(0x27, 0x6B, 0xB2)   # ParaQualis primary
 SLATE = RGBColor(0x81, 0xA5, 0xC1)
