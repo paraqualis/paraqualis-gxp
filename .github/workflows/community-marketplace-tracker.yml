@@ -1,4 +1,4 @@
-# Daily check: has paraqualis-skills appeared in Anthropic's community marketplace yet?
+# Daily check: has paraqualis-gxp appeared in Anthropic's community marketplace yet?
 # Opens a GitHub issue the FIRST time it's detected, then stays quiet on subsequent runs.
 # State is persisted in stats/community-marketplace-status.json so we never spam.
 
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check the community catalog for paraqualis-skills
+      - name: Check the community catalog for paraqualis-gxp
         id: check
         run: |
           mkdir -p stats
@@ -44,7 +44,7 @@ jobs:
           with open('/tmp/community.json') as f:
               cat = json.load(f)
           plugins = cat.get('plugins', [])
-          match = [p for p in plugins if p.get('name') == 'paraqualis-skills']
+          match = [p for p in plugins if p.get('name') == 'paraqualis-gxp']
           status = {
               'last_checked_at': datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00','Z'),
               'total_plugins_in_catalog': len(plugins),
@@ -92,7 +92,7 @@ jobs:
             const src    = entry.source || {};
             const ref    = src.ref || src.commit || 'unknown';
             const body = [
-              '`paraqualis-skills` has appeared in Anthropic\'s community marketplace.',
+              '`paraqualis-gxp` has appeared in Anthropic\'s community marketplace.',
               '',
               `- **Pinned commit SHA:** \`${ref}\``,
               `- **Catalog total at detection:** ${status.total_plugins_in_catalog}`,
@@ -101,7 +101,7 @@ jobs:
               'Users can now install via:',
               '```',
               '/plugin marketplace add anthropics/claude-plugins-community',
-              '/plugin install paraqualis-skills@claude-community',
+              '/plugin install paraqualis-gxp@claude-community',
               '```',
               '',
               '_(The community catalog syncs nightly; expect a few hours before all `/plugin` Discover tabs reflect this.)_'
@@ -109,7 +109,7 @@ jobs:
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo:  context.repo.repo,
-              title: '🎉 paraqualis-skills accepted into the community marketplace',
+              title: '🎉 paraqualis-gxp accepted into the community marketplace',
               body:  body,
               labels: ['milestone']
             });
