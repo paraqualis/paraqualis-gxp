@@ -1,11 +1,11 @@
-# Qualification Summary — paraqualis-skills v1.1.0
+# Qualification Summary — paraqualis-skills v1.2.0
 
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 
 | | |
 |---|---|
-| **System** | `paraqualis-skills` — Claude Code plugin/toolkit for life-sciences regulatory & CSV work |
-| **Version** | 1.1.0 (`.claude-plugin/plugin.json`) |
+| **System** | `paraqualis-skills` (repo) — Claude Code plugin/toolkit for life-sciences regulatory & CSV work; **published plugin id: `paraqualis-gxp`** |
+| **Version** | 1.2.0 (`.claude-plugin/plugin.json`) |
 | **Pack type** | IQ / OQ / PQ qualification package + DRAFT URS + gap register |
 | **Mode** | GENERATE (built from scratch by `/qualify:build`) |
 | **GAMP category (inferred)** | Category 5 (bespoke) + AI/ML considerations — owner to confirm |
@@ -126,4 +126,5 @@ definitions of done.
 | 0.3 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Removed GOQ-004 (test suite) as a risk-based decision; OQ-030 N/A; recount OQ FAIL 3->2, total FAIL 11->10 (+1 N/A). |
 | 0.4 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Recounted after closing GIQ-001/002/003 (Python 3.12 + venv + pinned mcp): IQ 11/3/0; totals 49/7/13 (+1 N/A). |
 | 0.5 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | All repo-fixable gaps closed (GIQ-004/005/006/007, GOQ-006/007); recount IQ 13/1/0, OQ 26/0/7, PQ 16/0/6; totals 55/1/13 (+1 N/A). Gating now = owner sign-off (GPQ-001, GPQ-004). |
-| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.1.0 (release bump; remediated build). |
+| 0.6 (DRAFT) | 2026-06-17 | ParaQualis qualification engine | Qualified-version references updated to v1.2.0 (release bump; remediated build). |
+| 0.7 (DRAFT) | 2026-06-18 | ParaQualis qualification engine | Plugin id renamed paraqualis-skills → paraqualis-gxp; version 1.1.0 → 1.2.0 (no functional change). |

@@ -52,7 +52,7 @@ installable with a single command (see Quick start). `install.sh` + symlinks rem
 
 1. **Install once.** Two ways:
    - **As a plugin (one command):** `/plugin marketplace add paraqualis/paraqualis-skills`
-     then `/plugin install paraqualis-skills@paraqualis`. (Needs the repo to be public, or
+     then `/plugin install paraqualis-gxp@paraqualis`. (Needs the repo to be public, or
      point the first command at a local path to test.)
    - **From source (dev workflow):** clone the repo (or download the ZIP), run
      `./install.sh`, restart Claude Code. (Full options — SSH/HTTPS/ZIP — in

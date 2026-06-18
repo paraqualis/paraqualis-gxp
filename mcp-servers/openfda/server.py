@@ -208,14 +208,15 @@ def server_version() -> dict:
     """
     import platform
     from pathlib import Path
-    version = "unknown"
+    name, version = "paraqualis-gxp", "unknown"
     manifest = Path(__file__).resolve().parents[2] / ".claude-plugin" / "plugin.json"
     try:
-        version = json.loads(manifest.read_text(encoding="utf-8")).get("version", "unknown")
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        name = data.get("name", name)
+        version = data.get("version", version)
     except Exception as e:
-        log.warning("could not read plugin.json version: %s", e)
-    return {"plugin": "paraqualis-skills", "version": version,
-            "python": platform.python_version()}
+        log.warning("could not read plugin.json: %s", e)
+    return {"plugin": name, "version": version, "python": platform.python_version()}
 
 
 if __name__ == "__main__":
