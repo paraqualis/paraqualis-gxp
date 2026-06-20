@@ -19,15 +19,15 @@ fans out to three specialist sub-agents in parallel, and assembles a client-read
 **Step 1 — get the files.** Use whichever route your access allows. *(The repository is
 private — you must first be granted access by ParaQualis, or use a copy they provide.)*
 - **SSH** (collaborators with an SSH key on the repo):
-  `git clone git@github.com:paraqualis/paraqualis-skills.git`
+  `git clone git@github.com:paraqualis/paraqualis-gxp.git`
 - **HTTPS** (collaborators — prompts for a GitHub token/login):
-  `git clone https://github.com/paraqualis/paraqualis-skills.git`
+  `git clone https://github.com/paraqualis/paraqualis-gxp.git`
 - **No git, or no access configured:** on the GitHub page choose **Code → Download ZIP**
   and unzip it.
 
 **Step 2 — install.** From the project folder:
 ```bash
-cd paraqualis-skills
+cd paraqualis-gxp
 ./install.sh          # or:  bash install.sh   (use this if it isn't executable, e.g. from a ZIP)
 ```
 This symlinks the commands, skills, and sub-agents into `~/.claude/`. Re-run it any time

@@ -201,7 +201,7 @@ def openfda_query(endpoint: str, search: str, limit: int = 5) -> dict:
 
 @mcp.tool()
 def server_version() -> dict:
-    """Return the deployed paraqualis-skills version + the server's Python runtime.
+    """Return the deployed paraqualis-gxp version + the server's Python runtime.
 
     Lets a caller confirm at runtime which qualified build is in use, rather than
     trusting a static manifest (21 CFR Part 11 §11.10(k); GAMP 5 change control).

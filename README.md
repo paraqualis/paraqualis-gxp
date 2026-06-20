@@ -24,7 +24,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](C
 ## Install
 
 ```
-/plugin marketplace add paraqualis/paraqualis-skills
+/plugin marketplace add paraqualis/paraqualis-gxp
 /plugin install paraqualis-gxp@paraqualis
 ```
 
@@ -122,7 +122,7 @@ The whole toolkit is packaged as a **Claude Code plugin** — the manifest lives
 `hooks/` folders are auto-discovered, so installing pulls in everything at once:
 
 ```
-/plugin marketplace add paraqualis/paraqualis-skills
+/plugin marketplace add paraqualis/paraqualis-gxp
 /plugin install paraqualis-gxp@paraqualis
 ```
 
@@ -164,8 +164,8 @@ For one-command end-user install, see **[Plugin](#plugin-one-command-install)** 
 from-source path below is the development workflow — edit a file and it's live immediately:
 
 ```bash
-git clone git@github.com:paraqualis/paraqualis-skills.git
-cd paraqualis-skills
+git clone git@github.com:paraqualis/paraqualis-gxp.git
+cd paraqualis-gxp
 ./install.sh
 ```
 

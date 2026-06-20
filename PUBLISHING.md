@@ -1,4 +1,4 @@
-# Publishing paraqualis-skills to Claude Code Plugin Marketplace
+# Publishing paraqualis-gxp to Claude Code Plugin Marketplace
 
 This guide covers the authoritative steps to publish a Claude Code plugin with MCP servers, hooks, commands, sub-agents, and skills. All documentation references are current as of June 2026.
 
@@ -36,7 +36,7 @@ MCP servers are declared in **`.mcp.json`** at the plugin root, or inline in `pl
 
 ```json
 {
-  "name": "paraqualis-skills",
+  "name": "paraqualis-gxp",
   "version": "1.0.0",
   "mcpServers": {
     "openfda": {
@@ -157,7 +157,7 @@ PostToolUse, PreToolUse, SessionStart, UserPromptSubmit, PermissionRequest, and 
 
 ```json
 {
-  "name": "paraqualis-skills",
+  "name": "paraqualis-gxp",
   "displayName": "Paraqualis CSV & Regulatory Skills",
   "version": "1.0.0",
   "description": "Comprehensive toolkit for life-sciences computerized system validation (CSV), GxP regulatory guidance, and GAMP 5 assessment",
@@ -166,8 +166,8 @@ PostToolUse, PreToolUse, SessionStart, UserPromptSubmit, PermissionRequest, and 
     "email": "craig.w.wylie@gmail.com",
     "url": "https://github.com/craigwylie"
   },
-  "homepage": "https://github.com/craigwylie/paraqualis-skills",
-  "repository": "https://github.com/craigwylie/paraqualis-skills",
+  "homepage": "https://github.com/craigwylie/paraqualis-gxp",
+  "repository": "https://github.com/craigwylie/paraqualis-gxp",
   "license": "MIT",
   "keywords": ["csv", "gamp", "validation", "pharma", "regulatory", "part11"],
   
@@ -250,7 +250,7 @@ If you omit component fields, Claude Code looks in default locations:
   
   "plugins": [
     {
-      "name": "paraqualis-skills",
+      "name": "paraqualis-gxp",
       "source": "./",
       "description": "Expert advisors and validation tools for pharma/medtech GxP systems",
       "version": "1.0.0",
@@ -258,8 +258,8 @@ If you omit component fields, Claude Code looks in default locations:
         "name": "Craig Wylie",
         "email": "craig.w.wylie@gmail.com"
       },
-      "homepage": "https://github.com/craigwylie/paraqualis-skills",
-      "repository": "https://github.com/craigwylie/paraqualis-skills",
+      "homepage": "https://github.com/craigwylie/paraqualis-gxp",
+      "repository": "https://github.com/craigwylie/paraqualis-gxp",
       "license": "MIT",
       "keywords": ["csv", "gamp", "validation", "pharma", "regulatory"]
     }
@@ -352,7 +352,7 @@ Resolves relative to marketplace root (where `.claude-plugin/marketplace.json` l
 Your public GitHub repository must contain:
 
 ```
-paraqualis-skills/
+paraqualis-gxp/
 ├── .claude-plugin/
 │   ├── plugin.json          # Plugin manifest (required)
 │   └── marketplace.json     # Marketplace catalog (if creating a marketplace)
@@ -389,7 +389,7 @@ Check for:
 claude --plugin-dir ./
 
 # Inside a session, verify your skills and MCP server work
-/paraqualis-skills:gamp-advisor
+/paraqualis-gxp:gamp-advisor
 
 # Check MCP server is available
 /mcp
@@ -400,7 +400,7 @@ claude --plugin-dir ./
 Push your repository to public GitHub:
 
 ```bash
-git remote add origin https://github.com/yourusername/paraqualis-skills.git
+git remote add origin https://github.com/yourusername/paraqualis-gxp.git
 git push -u origin main
 ```
 
@@ -416,7 +416,7 @@ Users can install your plugin by:
    `.claude-plugin/marketplace.json`, so anyone can install straight from GitHub — no
    third-party listing needed:
    ```
-   /plugin marketplace add <owner>/paraqualis-skills
+   /plugin marketplace add <owner>/paraqualis-gxp
    /plugin install paraqualis-gxp@paraqualis
    ```
 2. **An official / community marketplace listing.** Any curated submission process is
@@ -451,7 +451,7 @@ git push origin v1.0.0
 
 **Add your marketplace:**
 ```
-/plugin marketplace add yourusername/paraqualis-skills
+/plugin marketplace add yourusername/paraqualis-gxp
 ```
 
 **Install the plugin:**
@@ -467,7 +467,7 @@ Or install directly from GitHub:
 
 **Update:**
 ```
-/plugin update paraqualis-skills
+/plugin update paraqualis-gxp
 ```
 
 ---
@@ -604,7 +604,7 @@ claude --plugin-dir ./
 
 ---
 
-## Example: paraqualis-skills Publishing Checklist
+## Example: paraqualis-gxp Publishing Checklist
 
 - [ ] `.claude-plugin/plugin.json` has valid JSON and all required metadata
 - [ ] `.claude-plugin/marketplace.json` defined (if creating a marketplace)

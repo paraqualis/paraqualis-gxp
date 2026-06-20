@@ -4,13 +4,13 @@
 
 ## Reporting a vulnerability
 
-If you find a security issue in **paraqualis-skills** — anything that could be
+If you find a security issue in **paraqualis-gxp** — anything that could be
 exploited to read or alter data outside the toolkit's intended scope, escape
 the document-protection hook, leak credentials, or compromise a host running
 the openFDA MCP server — please report it **privately** rather than opening a
 public issue.
 
-**Contact:** `security@paraqualis.com` (subject line: "paraqualis-skills security")
+**Contact:** `security@paraqualis.com` (subject line: "paraqualis-gxp security")
 
 We aim to:
 - Acknowledge your report within **5 working days**.
@@ -46,8 +46,8 @@ reports that depend on already-public credentials.
 
 ## Supply-chain notes for regulated installers
 
-paraqualis-skills is distributed via Git with tagged releases on
-[GitHub](https://github.com/paraqualis/paraqualis-skills). Regulated installers
+paraqualis-gxp is distributed via Git with tagged releases on
+[GitHub](https://github.com/paraqualis/paraqualis-gxp). Regulated installers
 should:
 
 - **Pin to a tag** (e.g. `v1.0.0`) rather than tracking `main`, so the installed

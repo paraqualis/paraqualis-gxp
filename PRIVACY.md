@@ -6,7 +6,7 @@
 ## Summary
 
 **ParaQualis LLC does not collect, store, transmit, or process any personal
-data through the `paraqualis-skills` plugin.** The plugin is open-source
+data through the `paraqualis-gxp` plugin.** The plugin is open-source
 software that runs **entirely on your machine** inside Claude Code. We
 operate no server, no analytics, no telemetry, and no account system.
 
@@ -15,8 +15,8 @@ external data, the plugin performs no network communication at all.
 
 ## Who this policy applies to
 
-This policy covers the **`paraqualis-skills` plugin software**, distributed
-from `github.com/paraqualis/paraqualis-skills`. It does not cover:
+This policy covers the **`paraqualis-gxp` plugin software**, distributed
+from `github.com/paraqualis/paraqualis-gxp`. It does not cover:
 
 - Anthropic's Claude Code itself — governed by [Anthropic's privacy policy](https://www.anthropic.com/legal/privacy).
 - GitHub, which hosts the source and is touched by Claude Code when it
@@ -85,5 +85,5 @@ the repository's Git log.
 ## Contact
 
 ParaQualis LLC — Connecticut, United States.
-Privacy inquiries: `privacy@paraqualis.com` (subject line: "paraqualis-skills privacy").
+Privacy inquiries: `privacy@paraqualis.com` (subject line: "paraqualis-gxp privacy").
 For security issues, see [SECURITY.md](SECURITY.md) — `security@paraqualis.com`.

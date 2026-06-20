@@ -51,7 +51,7 @@ revising it means a new version under change control, not an in-place overwrite.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"/ABSOLUTE/PATH/TO/paraqualis-skills/hooks/protect-approved-documents.py\""
+            "command": "python3 \"/ABSOLUTE/PATH/TO/paraqualis-gxp/hooks/protect-approved-documents.py\""
           }
         ]
       }
