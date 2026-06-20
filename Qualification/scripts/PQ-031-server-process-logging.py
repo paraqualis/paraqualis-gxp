@@ -20,7 +20,7 @@ import sys
 import os
 import re
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 TARGETS = {
     "openFDA MCP server": os.path.join(REPO, "mcp-servers", "openfda", "server.py"),
     "document-protection hook": os.path.join(REPO, "hooks", "protect-approved-documents.py"),

@@ -18,7 +18,7 @@
 #   Qualification/build_xlsx.py:11-12 (openpyxl).
 # PASS/FAIL. Exit 0 = PASS, 1 = FAIL (not-met).
 set -uo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-skills}"
+REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
 cd "$REPO" || { echo "FAIL  cannot cd to $REPO"; exit 1; }
 
 echo "PQ-062 dependency manifest with version constraints"

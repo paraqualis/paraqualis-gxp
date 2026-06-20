@@ -13,7 +13,7 @@
 #   agents/*.md frontmatter 'tools:'  and  commands/qualify/build.md (Qualification/ only).
 # READ-ONLY. PASS/FAIL. Exit 0 = PASS, 1 = FAIL.
 set -uo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-skills}"
+REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
 echo "PQ-021 least privilege + write confinement"
 echo "------------------------------------------------------------"
 fail=0

@@ -17,7 +17,7 @@
 import sys
 import os
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 SERVER_DIR = os.path.join(REPO, "mcp-servers", "openfda")
 sys.path.insert(0, SERVER_DIR)
 

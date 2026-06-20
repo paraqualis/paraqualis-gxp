@@ -20,7 +20,7 @@ import shutil
 import tempfile
 import subprocess
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 PACK = os.path.join(REPO, "Qualification")
 
 print("PQ-006 builders render Markdown faithfully")

@@ -18,7 +18,7 @@ import sys
 import os
 import re
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 OVERVIEW = os.path.join(REPO, "docs", "OVERVIEW.md")
 
 print("PQ-061 catalog matches actual assets (no drift)")

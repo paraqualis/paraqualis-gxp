@@ -16,7 +16,7 @@
 import sys
 import os
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 sys.path.insert(0, os.path.join(REPO, "mcp-servers", "openfda"))
 
 print("PQ-013 errors surface, never swallowed silently")

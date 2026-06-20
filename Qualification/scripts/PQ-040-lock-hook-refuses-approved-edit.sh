@@ -13,7 +13,7 @@
 #   hooks/protect-approved-documents.py:27 (LOCK_MARKER) and :51-60 (exit 2 block / 0 allow).
 # PASS/FAIL. Exit 0 = PASS, 1 = FAIL.
 set -uo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-skills}"
+REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
 HOOK="$REPO/hooks/protect-approved-documents.py"
 MARKER='<!-- PARAQUALIS-LOCK: approved -->'
 

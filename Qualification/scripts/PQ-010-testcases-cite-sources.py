@@ -18,7 +18,7 @@ import sys
 import os
 import re
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 SCRIPTS = os.path.join(REPO, "Qualification", "scripts")
 
 print("PQ-010 test-cases cite sources (no unsourced literals)")

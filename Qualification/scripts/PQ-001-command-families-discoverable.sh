@@ -13,7 +13,7 @@
 # requirement URS-001 which names the six families.
 # READ-ONLY. Emits PASS/FAIL. Exit 0 = PASS, 1 = FAIL.
 set -euo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-skills}"
+REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
 CMD="$REPO/commands"
 
 # Families named in URS-001 (Qualification/requirements/URS.md:36) — the discoverability spec.

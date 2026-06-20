@@ -16,7 +16,7 @@ import sys
 import os
 import re
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-skills"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
 DOCS = os.path.join(REPO, "Qualification", "docs")
 REQ = os.path.join(REPO, "Qualification", "requirements")
 
