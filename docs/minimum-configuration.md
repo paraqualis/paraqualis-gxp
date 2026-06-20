@@ -1,4 +1,4 @@
-# Minimum usable configuration — paraqualis-skills
+# Minimum usable configuration — paraqualis-gxp
 
 The single page that says **what must be in place for the toolkit to work**, and the one
 step that satisfies each. (Closes gap GOQ-007.)

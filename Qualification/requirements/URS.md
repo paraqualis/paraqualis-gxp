@@ -1,4 +1,4 @@
-# User Requirements Specification (URS) — paraqualis-skills
+# User Requirements Specification (URS) — paraqualis-gxp
 
 > **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 > Authored by ParaQualis qualification engine (`/qualify:requirements` flow, invoked from
@@ -7,7 +7,7 @@
 
 | | |
 |---|---|
-| **System** | `paraqualis-skills` — a Claude Code plugin/toolkit for life-sciences regulatory & computer-system-validation (CSV) work |
+| **System** | `paraqualis-gxp` — a Claude Code plugin/toolkit for life-sciences regulatory & computer-system-validation (CSV) work |
 | **Version under specification** | 1.2.0 (`.claude-plugin/plugin.json`) |
 | **Intended use** | Provide Claude Code commands, auto-invoked skills, parallel sub-agents, an MCP tool server, and a document-protection hook that help regulatory/CSV practitioners assess and document GxP computerized systems against GAMP 5, 21 CFR Part 11, EU GMP Annex 11; retrieve live regulatory text (eCFR) and FDA data (openFDA); and generate draft IQ/OQ/PQ qualification packs. |
 | **Primary users** | CSV engineers, QA/regulatory affairs staff, validation leads working inside Claude Code. |

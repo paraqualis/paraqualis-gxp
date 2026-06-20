@@ -1,4 +1,4 @@
-# Gap Analysis — paraqualis-skills v1.2.0
+# Gap Analysis — paraqualis-gxp v1.2.0
 
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 

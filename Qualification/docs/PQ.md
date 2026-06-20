@@ -10,7 +10,7 @@
 
 Performance Qualification asks one question: **does the system actually do its intended job, with realistic use and realistic data?** Where Installation Qualification checks the system is correctly *in place* and Operational Qualification checks each function *works to spec*, PQ exercises the **whole job end-to-end** and traces each result back to a stated requirement (`URS-NNN`). Each test-case below maps one URS requirement to the place its real-world behaviour can be evidenced.
 
-The system under test is `paraqualis-skills` — a Claude Code toolkit for life-sciences regulatory and computer-system-validation work (regulatory commands, auto-invoked advisory skills, parallel qualification sub-agents, an openFDA tool server, and a document-protection hook). Because the qualification engine uses an LLM to generate GxP-impacting evidence, the AI-specific test-cases (`PQ-AI-0NN`) additionally check that AI claims are traceable, human-reviewed, scoped to a stated Context of Use, and consistent.
+The system under test is `paraqualis-gxp` — a Claude Code toolkit for life-sciences regulatory and computer-system-validation work (regulatory commands, auto-invoked advisory skills, parallel qualification sub-agents, an openFDA tool server, and a document-protection hook). Because the qualification engine uses an LLM to generate GxP-impacting evidence, the AI-specific test-cases (`PQ-AI-0NN`) additionally check that AI claims are traceable, human-reviewed, scoped to a stated Context of Use, and consistent.
 
 ## 2. Context of Use and self-qualification caveat (AI governance)
 

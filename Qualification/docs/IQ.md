@@ -1,4 +1,4 @@
-# Installation Qualification (IQ) — paraqualis-skills v1.2.0
+# Installation Qualification (IQ) — paraqualis-gxp v1.2.0
 
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 

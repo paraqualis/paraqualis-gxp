@@ -1,4 +1,4 @@
-# paraqualis-skills — Python dependencies (validated baseline)
+# paraqualis-gxp — Python dependencies (validated baseline)
 #
 # Requires Python >= 3.10.  The `mcp` SDK (openFDA MCP server) does not publish
 # distributions for Python 3.9 or earlier; python-docx and openpyxl run on 3.9+,

@@ -1,6 +1,6 @@
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 
-# OQ Section — paraqualis-skills v1.2.0
+# OQ Section — paraqualis-gxp v1.2.0
 
 DRAFT — pending review and approval by appropriately qualified and authorized personnel.
 

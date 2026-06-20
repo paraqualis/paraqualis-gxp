@@ -1,10 +1,10 @@
-# Qualification Summary — paraqualis-skills v1.2.0
+# Qualification Summary — paraqualis-gxp v1.2.0
 
 **DRAFT — pending review and approval by appropriately qualified and authorized personnel.**
 
 | | |
 |---|---|
-| **System** | `paraqualis-skills` (repo) — Claude Code plugin/toolkit for life-sciences regulatory & CSV work; **published plugin id: `paraqualis-gxp`** |
+| **System** | `paraqualis-gxp` (repo) — Claude Code plugin/toolkit for life-sciences regulatory & CSV work; **published plugin id: `paraqualis-gxp`** |
 | **Version** | 1.2.0 (`.claude-plugin/plugin.json`) |
 | **Pack type** | IQ / OQ / PQ qualification package + DRAFT URS + gap register |
 | **Mode** | GENERATE (built from scratch by `/qualify:build`) |
