@@ -20,7 +20,7 @@ generated from the repo itself, so it always matches what's installed.
 | **Sub-agent** | A specialist Claude **delegates to**, in its own context (several can run in parallel) | don't invoke directly | `iq-qualifier` |
 | **MCP server (tool)** | Real executable **tools** that reach external systems (APIs, databases) — code, not a prompt | just ask; Claude calls the tool | `openfda` (recalls/labels/events) |
 | **Hook** | A script Claude Code runs **automatically on an event** (before/after a tool, on a prompt) — deterministic, no model turn | configure once; it fires on its own | `protect-approved-documents` |
-| **Plugin** | A **bundle** of all the blocks above, installed in **one command** | install it once | `paraqualis-skills` |
+| **Plugin** | A **bundle** of all the blocks above, installed in **one command** | install it once | `paraqualis-gxp` |
 
 Built *from* these blocks: **the qualification engine** — the `/qualify:*` commands plus
 three sub-agents that produce an IQ/OQ/PQ pack. `/qualify:build <app>` generates it,
@@ -51,7 +51,7 @@ installable with a single command (see Quick start). `install.sh` + symlinks rem
 ## Quick start
 
 1. **Install once.** Two ways:
-   - **As a plugin (one command):** `/plugin marketplace add paraqualis/paraqualis-skills`
+   - **As a plugin (one command):** `/plugin marketplace add paraqualis/paraqualis-gxp`
      then `/plugin install paraqualis-gxp@paraqualis`. (Needs the repo to be public, or
      point the first command at a local path to test.)
    - **From source (dev workflow):** clone the repo (or download the ZIP), run

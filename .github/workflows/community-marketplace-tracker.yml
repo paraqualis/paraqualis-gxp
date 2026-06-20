@@ -6,7 +6,7 @@ name: Community marketplace tracker
 
 on:
   schedule:
-    - cron: '0 * * * *'      # hourly while awaiting the directory listing (revert to '0 9 * * *' once listed)
+    - cron: '0 */6 * * *'    # every 6h while awaiting the directory listing (revert to '0 9 * * *' once listed)
   workflow_dispatch:          # also runnable manually from the Actions tab
 
 permissions:
