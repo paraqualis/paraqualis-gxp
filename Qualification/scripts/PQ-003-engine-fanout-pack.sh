@@ -13,7 +13,7 @@
 # Expected agent set and the write-confinement rule are SOURCED from the command and protocol.
 # READ-ONLY. PASS/FAIL. Exit 0 = PASS, 1 = FAIL.
 set -euo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
+REPO="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 BUILD_CMD="$REPO/commands/qualify/build.md"
 fail=0
 echo "PQ-003 engine fan-out + pack confinement"

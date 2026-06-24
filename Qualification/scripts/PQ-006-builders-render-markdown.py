@@ -20,7 +20,7 @@ import shutil
 import tempfile
 import subprocess
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/Users/craigwylie/Devl/paraqualis-gxp"
+REPO = sys.argv[1] if len(sys.argv) > 1 else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PACK = os.path.join(REPO, "Qualification")
 
 print("PQ-006 builders render Markdown faithfully")
@@ -66,8 +66,9 @@ try:
     pq_docx = os.path.join(docs, "PQ.docx")
     if os.path.exists(os.path.join(docs, "PQ.md")) and os.path.exists(pq_docx):
         import docx as _docx
-        body = "\n".join(p.text for p in _docx.Document(pq_docx).paragraphs)
-        tables = "\n".join(c.text for t in _docx.Document(pq_docx).tables
+        doc = _docx.Document(pq_docx)
+        body = "\n".join(p.text for p in doc.paragraphs)
+        tables = "\n".join(c.text for t in doc.tables
                            for row in t.rows for c in row.cells)
         haystack = body + "\n" + tables
         if "PQ-001" in haystack or "Performance Qualification" in haystack:

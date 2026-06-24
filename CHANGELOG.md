@@ -6,6 +6,17 @@ This project follows [Semantic Versioning](https://semver.org/) and the
 
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
+## [1.2.1] — 2026-06-24
+
+### Fixed — just tidying up
+
+- **Qualification PQ scripts no longer default to a dead path.** All 19 `PQ-*` test
+  scripts fell back to a hardcoded `/Users/craigwylie/Devl/paraqualis-gxp` path when run
+  without an explicit repo argument, silently targeting a non-existent tree on any other
+  machine. They now derive the repo root from the script's own location, matching the
+  convention the `IQ-*`/`OQ-*` scripts already use.
+- **`PQ-006`** parsed the same `PQ.docx` twice; now parses it once.
+
 ## [1.2.0] — 2026-06-18
 
 ### Changed

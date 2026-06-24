@@ -12,7 +12,7 @@
 # What a "correct link set" is comes from the repo itself (one link per command family / skill /
 # agent) — SOURCED from install.sh:55-57. PASS/FAIL. Exit 0 = PASS, 1 = FAIL.
 set -uo pipefail
-REPO="${1:-/Users/craigwylie/Devl/paraqualis-gxp}"
+REPO="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 INSTALL="$REPO/install.sh"
 
 echo "PQ-060 installer idempotency"

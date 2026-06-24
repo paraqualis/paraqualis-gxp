@@ -1,6 +1,6 @@
 {
   "name": "paraqualis-gxp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Life-sciences regulatory & computer-system-validation toolkit for Claude Code — GAMP 5, 21 CFR Part 11, EU GMP Annex 11, the live eCFR, openFDA, and an IQ/OQ/PQ qualification engine (/qualify:build, /qualify:requirements, /qualify:review). Commands, skills, sub-agents, and a document-protection hook. Run /openfda:setup once to provision a free personal openFDA API key (one minute, raises rate limits ~1,000 → ~120,000 requests/day).",
   "author": {
     "name": "ParaQualis LLC",
