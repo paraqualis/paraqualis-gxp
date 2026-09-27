@@ -21,6 +21,14 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CHANGELOG.md](C
 > glance, with a live catalog of every command, skill, and sub-agent (auto-generated, so
 > it never drifts). Then [docs/how-to-qualify.md](docs/how-to-qualify.md) for the `/qualify:*` engine.
 
+## Say hello
+
+We're a small team, and the plugin has no telemetry — so the only way we know who uses it
+is if you tell us. If you're using ParaQualis GxP, we'd love to hear who you are and what
+you're validating: **hello@paraqualis.com**, or introduce yourself in
+[Discussions](https://github.com/paraqualis/paraqualis-gxp/discussions). Feature requests,
+gaps, and "this didn't work for our QMS" are all welcome.
+
 ## Install
 
 ```
@@ -110,6 +118,7 @@ for safety and governance controls.
 | Hook | Event | What it does |
 |---|---|---|
 | `protect-approved-documents.py` | `PreToolUse` | Blocks any edit to a file containing the marker `<!-- PARAQUALIS-LOCK: approved -->`. Approved records can't be overwritten in place; revise via a new version under change control. |
+| `welcome-once.py` | `SessionStart` | Shows a one-line "say hello" note the first time the plugin runs, then never again. Local marker file only; no network. |
 
 Register a hook in `settings.json` (see [`hooks/README.md`](hooks/README.md) for user vs.
 project scope). The **plugin** bundles this hook automatically via `hooks/hooks.json`.

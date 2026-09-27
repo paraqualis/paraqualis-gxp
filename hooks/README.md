@@ -8,6 +8,15 @@ and governance controls.
 
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
+## `welcome-once.py`
+
+A **SessionStart** hook (plugin install only) that shows a one-line invitation to get in
+touch — `hello@paraqualis.com` or GitHub Discussions — the **first** time the plugin runs,
+then stays silent for good. It records that it has shown the note in a marker file,
+`welcome-shown`, inside the plugin's data directory (`${CLAUDE_PLUGIN_DATA}`). Nothing is
+sent anywhere. Delete the marker to see the note again. On a Claude Code version too old to
+provide `CLAUDE_PLUGIN_DATA`, it says so on stderr rather than repeating the note every session.
+
 ## `protect-approved-documents.py`
 
 A **PreToolUse** hook that refuses any edit to an *approved, locked* document.

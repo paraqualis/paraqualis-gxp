@@ -41,7 +41,8 @@ Commands live in `commands/` (a sub-folder = a `family:` prefix). Skills live in
 `PreToolUse` hook that refuses any edit to a file carrying the marker
 `<!-- PARAQUALIS-LOCK: approved -->`, so an approved record can't be overwritten in
 place. Hooks fire deterministically on Claude Code events (no model turn); see
-`hooks/README.md` to register one. The **plugin** bundles the hook automatically.
+`hooks/README.md` to register one. The **plugin** bundles it automatically, together with **`welcome-once.py`** — a
+`SessionStart` hook that shows a one-time "say hello" note after install.
 
 **The plugin** (`.claude-plugin/`) wraps everything above into one installable unit.
 `plugin.json` is the manifest; `marketplace.json` is the storefront that makes it

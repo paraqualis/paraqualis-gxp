@@ -1,6 +1,6 @@
 # Privacy Policy — ParaQualis Skills
 
-*Effective date: 2026-05-31. Last updated: 2026-05-31.*
+*Effective date: 2026-05-31. Last updated: 2026-09-27.*
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
 ## Summary
@@ -34,8 +34,13 @@ When you invoke a command, skill, or sub-agent, the plugin may:
 - **Read environment variables** you have set (notably `OPENFDA_API_KEY`,
   if present, so the openFDA MCP server can pass it to the FDA's API).
 
+- **Write one marker file**, `welcome-shown`, in the plugin's own data
+  directory the first time it runs, so the one-time "say hello" note is
+  never shown twice. It contains only a timestamp.
+
 All of the above happens on your machine. None of it is sent to
-ParaQualis LLC.
+ParaQualis LLC. If you want us to know you're using the plugin, you have
+to tell us — hello@paraqualis.com.
 
 ## Third-party services the plugin may contact
 

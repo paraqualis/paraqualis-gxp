@@ -6,6 +6,16 @@ This project follows [Semantic Versioning](https://semver.org/) and the
 
 *Copyright © 2026 ParaQualis LLC · MIT licensed.*
 
+## [1.2.2] — 2026-09-27
+
+### Added
+
+- **One-time "say hello" note.** New `SessionStart` hook, `hooks/welcome-once.py`: the first
+  session after install shows a single line inviting you to get in touch
+  (hello@paraqualis.com or GitHub Discussions), then never again. Local marker file only —
+  still no telemetry, no network. README gains a *Say hello* section; PRIVACY.md documents
+  the marker file.
+
 ## [1.2.1] — 2026-06-24
 
 ### Fixed — just tidying up
