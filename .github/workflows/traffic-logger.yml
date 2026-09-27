@@ -12,14 +12,11 @@ on:
 permissions:
   contents: write
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # silences Node 20 deprecation warning
-
 jobs:
   log:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Fetch clones + views from the Traffic API
         env:
@@ -36,7 +33,15 @@ jobs:
             exit 1
           fi
           mkdir -p stats
-          gh api /repos/${{ github.repository }}/traffic/clones > /tmp/clones.json
+          # A 401 here means the PAT has expired or been revoked — say so explicitly
+          # rather than surfacing gh's bare "Bad credentials".
+          if ! gh api /repos/${{ github.repository }}/traffic/clones > /tmp/clones.json 2>/tmp/gh.err; then
+            cat /tmp/gh.err
+            if grep -q 'HTTP 401' /tmp/gh.err; then
+              echo "::error::TRAFFIC_TOKEN is expired or revoked (HTTP 401). Generate a new PAT and replace the secret — see stats/README.md. Traffic older than 14 days is lost for good, so renew promptly."
+            fi
+            exit 1
+          fi
           gh api /repos/${{ github.repository }}/traffic/views  > /tmp/views.json
 
           python3 <<'PY'

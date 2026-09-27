@@ -20,7 +20,9 @@ secret called **`TRAFFIC_TOKEN`**. Five minutes, one-time:
 1. **Create the PAT** at
    <https://github.com/settings/personal-access-tokens/new>
    - Token name: `paraqualis-gxp-traffic`
-   - Expiration: 1 year (or whatever cadence works for you)
+   - Expiration: **pick explicitly** — the form's default is 30 days, which is what
+     silently broke the logger from 2026-07-18 to 2026-09-27 (~10 weeks of traffic lost,
+     since GitHub keeps only 14). Choose 1 year and diarise the renewal.
    - Repository access → **Only select repositories** → `paraqualis/paraqualis-gxp`
    - Permissions → Repository permissions → **Administration: Read-only**
      *(Leave everything else as "No access".)*

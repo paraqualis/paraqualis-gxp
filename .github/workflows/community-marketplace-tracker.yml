@@ -13,14 +13,11 @@ permissions:
   contents: write              # to commit the updated status file
   issues: write                # to open the "we're in!" milestone issue
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # silences Node 20 deprecation warning
-
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check the community catalog for paraqualis-gxp
         id: check
